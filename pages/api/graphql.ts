@@ -4,6 +4,9 @@ import type { NextRequest } from "next/server";
 
 import { typeDefs } from "../../graphql/schema/index";
 import { resolvers } from "../../graphql/resolvers";
+import { connectMongoDb } from "../../utils/connect-to-db";
+
+await connectMongoDb();
 
 const server = new ApolloServer({
   typeDefs,
