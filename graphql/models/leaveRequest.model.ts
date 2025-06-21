@@ -15,9 +15,9 @@ const leaveRequestschema = new Schema(
     reason: { type: String, required: true },
     file: { type: String },
     approver: { type: Schema.Types.ObjectId, ref: "User" },
-    notifyTo: { type: [Schema.Types.ObjectId], ref: "User" },
+    notifyTo: [{ type: Schema.Types.ObjectId, ref: "User" }],
     rejectionReason: { type: String },
-    LeaveTypeEnum: {
+    LeaveType: {
       type: String,
       enum: Object.values(leaveTypeEnum),
       required: true,
