@@ -22,5 +22,8 @@ export const userTypeDefs = gql`
   }
   type Mutation {
     createEmployee(input: UserInput!): User!
+    sendOtp(email: String!): User!
+    verifyOtp(email: String!, otp: Int!): Boolean!
+    setNewPassword(email: String!, newPassword: String!): String!
   }
 `;

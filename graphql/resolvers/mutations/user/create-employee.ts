@@ -1,4 +1,4 @@
-import { userModel } from "../../models/user.model";
+import { userModel } from "../../../models/user.model";
 
 export const createEmployee = async (_: unknown, { input }: { input: any }) => {
   const user = userModel.create({
