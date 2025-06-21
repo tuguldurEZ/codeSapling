@@ -4,6 +4,7 @@ const leaveTypeSchema = new Schema({
   casualLeave: { type: Number },
   paidLeave: { type: Number },
   annualLeave: { type: Number },
+  remoteWork: { type: Number },
 });
 export const leaveTypeModel =
   models.leaveType || model("leaveType", leaveTypeSchema);
