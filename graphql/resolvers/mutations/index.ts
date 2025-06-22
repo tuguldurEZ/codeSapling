@@ -3,3 +3,6 @@ export * from "./user/send-otp";
 export * from "./user/verify-otp";
 export * from "./user/set-new-password";
 export * from "./leave-type";
+export * from "./role/create-role";
+export * from "./role/edit-role";
+export * from "./role/delete-role";
