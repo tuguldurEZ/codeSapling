@@ -6,3 +6,4 @@ export * from "./leave-type";
 export * from "./role/create-role";
 export * from "./role/edit-role";
 export * from "./role/delete-role";
+export * from "./leave-request/leaveRequestMutations";
