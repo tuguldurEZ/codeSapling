@@ -16,10 +16,7 @@ const userSchema = new Schema(
     employedDate: { type: Date, required: true },
     phone: { type: Number, required: true },
     leaveType: { type: Schema.Types.ObjectId, ref: "leaveType" },
-    employeeRole: {
-      type: Schema.Types.ObjectId,
-      ref: "EmployeeRole",
-    },
+    employeeRole: { type: String, required: true, unique: true },
   },
   { timestamps: true }
 );

@@ -11,6 +11,7 @@ export const userTypeDefs = gql`
     lastName: String!
     employedDate: String!
     phone: Int!
+    employeeRole: String!
   }
   input UserInput {
     email: String!
@@ -19,6 +20,7 @@ export const userTypeDefs = gql`
     lastName: String!
     employedDate: String!
     phone: Int!
+    employeeRole: String!
   }
   type Mutation {
     createEmployee(input: UserInput!): User!

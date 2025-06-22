@@ -8,6 +8,7 @@ export const createEmployee = async (_: unknown, { input }: { input: any }) => {
     lastName: input.lastName,
     phone: input.phone,
     employedDate: input.employedDate,
+    employeeRole: input.employeeRole,
   });
   return user;
 };
