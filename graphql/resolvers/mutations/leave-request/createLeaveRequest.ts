@@ -2,15 +2,22 @@ import { MutationResolvers } from "../../../../generated/server-types";
 import { leaveRequestModel } from "../../../models/leaveRequest.model";
 
 export const createLeaveRequest: MutationResolvers["createLeaveRequest"] =
-  async (_: unknown, { input }) => {
-    const leaveRequest = await leaveRequestModel.create({
+  async (_, { input }) => {
+    // First, create the leave request
+    const created = await leaveRequestModel.create({
       userId: input.userId,
       startDate: input.startDate,
       endDate: input.endDate,
       reason: input.reason,
+      file: input.file,
       approver: input.approver,
       notifyTo: input.notifyTo,
       LeaveType: input.LeaveType,
     });
-    return leaveRequest;
+
+    const populated = await leaveRequestModel
+      .findById(created._id)
+      .populate("userId approver notifyTo");
+
+    return populated;
   };
