@@ -28,4 +28,7 @@ export const userTypeDefs = gql`
     verifyOtp(email: String!, otp: Int!): Boolean!
     setNewPassword(email: String!, newPassword: String!): String!
   }
+  type Query {
+    getUsers: [User!]!
+  }
 `;
