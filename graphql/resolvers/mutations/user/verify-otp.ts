@@ -1,4 +1,7 @@
+import jwt from "jsonwebtoken";
 import { userModel } from "../../../models/user.model";
+
+const JWT_SECRET = process.env.JWT_SECRET || "your_default_jwt_secret";
 
 export const verifyOtp = async (
   _: unknown,
@@ -6,10 +9,22 @@ export const verifyOtp = async (
 ) => {
   const user = await userModel.findOne({ email });
   if (!user) {
-    throw new Error("user not found");
+    throw new Error("User not found");
   }
-  if (user.otpcode === otp) {
-    return true;
+
+  if (user.otpcode !== otp) {
+    throw new Error("Invalid OTP");
   }
-  return false;
+
+  const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+    expiresIn: "24h",
+  });
+
+  user.otpcode = undefined;
+  await user.save();
+  return {
+    message: "OTP verified successfully",
+    token,
+    role: user.role,
+  };
 };

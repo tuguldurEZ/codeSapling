@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { useSendOtpMutation } from "../../../../../generated/client-types";
 
 const formSchema = z.object({
   email: z.string().email("И-мэйл хаяг буруу байна").min(2, {
@@ -22,15 +23,23 @@ const formSchema = z.object({
   }),
 });
 
-const FirstStep = ({ setStep }: { setStep: (_step: number) => void }) => {
+const FirstStep = ({
+  setStep,
+  setEmail,
+}: {
+  setStep: (_step: number) => void;
+  setEmail: (_email: string) => void;
+}) => {
+  const [sendOtp, { loading }] = useSendOtpMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setEmail(values.email);
+    await sendOtp({ variables: { email: values.email } });
     setStep(2);
   }
 
@@ -61,8 +70,12 @@ const FirstStep = ({ setStep }: { setStep: (_step: number) => void }) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full h-[40px] px-5 mb-6">
-              Нэвтрэх
+            <Button
+              disabled={loading}
+              type="submit"
+              className="w-full h-[40px] px-5 mb-6"
+            >
+              {loading ? "Уншаж байна..." : " Нэвтрэх"}
             </Button>
           </div>
         </form>

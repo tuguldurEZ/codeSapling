@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,14 +19,20 @@ import {
 } from "@/components/ui/input-otp";
 import Image from "next/image";
 import { useState } from "react";
+import { useVerifyOtpMutation } from "../../../../../generated/client-types";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
-  pin: z.string().min(3, {
-    message: "Your one-time password must be 3 characters.",
+  pin: z.string().length(4, {
+    message: "4 оронтой OTP код оруулна уу.",
   }),
 });
 
-const SecondStep = () => {
+const SecondStep = ({ email }: { email: string }) => {
+  const router = useRouter();
+  const [verifyOtp, { loading }] = useVerifyOtpMutation();
+  const [value, setValue] = useState("");
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -35,17 +40,40 @@ const SecondStep = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
-  const [value, setValue] = useState("");
-  console.log(value)
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      const response = await verifyOtp({
+        variables: {
+          email,
+          otp: parseInt(data.pin),
+        },
+      });
+
+      const token = response?.data?.verifyOtp?.token;
+      const role = response?.data?.verifyOtp?.role;
+
+      if (token && role) {
+        localStorage.setItem("token", token);
+
+        toast.success("Амжилттай нэвтэрлээ!");
+
+        if (role === "ADMIN") {
+          router.push("/dashboard");
+        } else {
+          router.push("/");
+        }
+      } else {
+        toast.error("OTP баталгаажуулалт амжилтгүй боллоо.");
+      }
+    } catch (err: any) {
+      const errorMessage = err.message || "Алдаа гарлаа";
+      toast.error(errorMessage);
+      form.setError("pin", {
+        message: "OTP код буруу байна",
+      });
+    }
+  };
+
   return (
     <div className="w-[364px] h-[364px] bg-white flex flex-col justify-between items-center rounded-[10px] shadow-2xl">
       <p className="text-black text-xl font-bold mt-6">Нэвтрэх</p>
@@ -70,14 +98,19 @@ const SecondStep = () => {
                       {...field}
                       value={value}
                       className="w-full mx-auto flex justify-center"
-                      onChange={(value) => setValue(value)}
-                      
+                      onChange={(value) => {
+                        setValue(value);
+                        field.onChange(value);
+                      }}
                     >
                       <InputOTPGroup className="mx-auto w-full flex justify-center">
-                        <InputOTPSlot index={0} className="w-11 h-11" />
-                        <InputOTPSlot index={1} className="w-11 h-11" />
-                        <InputOTPSlot index={2} className="w-11 h-11" />
-                        <InputOTPSlot index={3} className="w-11 h-11" />
+                        {[0, 1, 2, 3].map((i) => (
+                          <InputOTPSlot
+                            key={i}
+                            index={i}
+                            className="w-11 h-11"
+                          />
+                        ))}
                       </InputOTPGroup>
                     </InputOTP>
                   </FormControl>
@@ -85,8 +118,12 @@ const SecondStep = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full h-[40px] px-5 mb-6">
-              Нэвтрэх
+            <Button
+              type="submit"
+              className="w-full h-[40px] px-5 mb-6"
+              disabled={loading}
+            >
+              {loading ? "Шалгаж байна..." : "Нэвтрэх"}
             </Button>
           </div>
         </form>

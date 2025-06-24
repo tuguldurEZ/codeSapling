@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="w-[288px] py-5 px-[20px] flex flex-col h-[100vh] gap-10 bg-[#ffffff]">
+    <div className="w-[288px] py-5 px-[20px] flex flex-col h-[91vh] gap-10 bg-[#ffffff]">
       <Link href="/">
         <div className="flex  gap-3">
           <img src="/logo.svg" alt="" className="w-[46px] h-[37.29px]" />

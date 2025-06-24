@@ -1,3 +1,4 @@
+"use client";
 import { Menu } from "lucide-react";
 import React from "react";
 import {
@@ -5,8 +6,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    router.push("/auth/sign-in");
+  };
   return (
     <div className="w-full bg-white border-b-[1px] border-gray-400 h-[80px] flex justify-end px-[80px] py-[6px]">
       <Popover>
@@ -19,7 +26,9 @@ const Header = () => {
             </p>
           </div>
         </PopoverTrigger>
-        <PopoverContent>Logout</PopoverContent>
+        <PopoverContent>
+          <button onClick={logoutHandler}>Logout</button>
+        </PopoverContent>
       </Popover>
     </div>
   );

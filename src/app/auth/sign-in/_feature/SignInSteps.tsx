@@ -15,8 +15,8 @@ const SignInSteps = () => {
   const [email, setEmail] = useState<string>("");
   return (
     <div className="flex flex-col items-center gap-[24px]">
-      {step === 1 && <FirstStep setStep={setStep}/>}
-      {step === 2 && <SecondStep />}
+      {step === 1 && <FirstStep setStep={setStep} setEmail={setEmail} />}
+      {step === 2 && <SecondStep email={email}/>}
       {step === 3 && <ThirdStep />}
     </div>
   );

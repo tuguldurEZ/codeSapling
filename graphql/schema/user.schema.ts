@@ -22,13 +22,19 @@ export const userTypeDefs = gql`
     phone: Int!
     employeeRole: String!
   }
+  type AuthResponse {
+    message: String!
+    token: String!
+    role: String!
+  }
   type Mutation {
     createEmployee(input: UserInput!): User!
     sendOtp(email: String!): User!
-    verifyOtp(email: String!, otp: Int!): Boolean!
+    verifyOtp(email: String!, otp: Int!): AuthResponse!
     setNewPassword(email: String!, newPassword: String!): String!
   }
   type Query {
     getUsers: [User!]!
+    getCurrentUser(JWT: String!): User!
   }
 `;

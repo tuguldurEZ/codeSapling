@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ApolloWrapper from "@/components/AppoloWrapper";
-import Header from "@/components/Header";
+import EmployeeProvider from "./_context/employeeContext";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -26,11 +27,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ApolloWrapper>
-          <div className="bg-[#F9FAFB]">
-            <Header />
-          {children}
-          </div>
-          
+          <EmployeeProvider>
+            <Toaster />
+            {children}
+          </EmployeeProvider>
         </ApolloWrapper>
       </body>
     </html>

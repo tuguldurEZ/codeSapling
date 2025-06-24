@@ -6,7 +6,7 @@ import { useGetUsersQuery } from "../../../../generated/client-types";
 
 const EmployeesPage = () => {
   const { data, loading, error } = useGetUsersQuery();
-  console.log(data);
+
   if (loading) return <p className="px-6 py-4">Уншиж байна...</p>;
   if (error)
     return <p className="px-6 py-4 text-red-500">Алдаа: {error.message}</p>;

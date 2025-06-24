@@ -1,19 +1,39 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import Sidebar from "./_components/Sidebar";
+import Header from "@/components/Header";
+import { Toaster } from "sonner";
+import { useEmployee } from "../_context/employeeContext";
+import { useRouter } from "next/navigation";
 
 type Props = {
   children: ReactNode;
 };
-const Authlayout = (props: Props) => {
+
+const AuthLayout = ({ children }: Props) => {
+  const { currentUser } = useEmployee();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (currentUser && currentUser.role !== "ADMIN") {
+      router.push("/");
+    }
+  }, [currentUser, router]);
+
+  if (!currentUser || currentUser.role !== "ADMIN") {
+    return null;
+  }
+
   return (
-    <div className="flex">
-      <Sidebar />
-      {props.children}
-      {/* <Toaster /> */}
+    <div className="bg-[#F9FAFB]">
+      <Header />
+      <div className="flex">
+        <Sidebar />
+        {children}
+        <Toaster />
+      </div>
     </div>
   );
-  // }
 };
 
-export default Authlayout;
+export default AuthLayout;
