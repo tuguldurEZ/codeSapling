@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
 import { useState } from "react";
 
-import Link from "next/link";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import ThirdStep from "./ThirdStep";
