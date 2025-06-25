@@ -1,7 +1,5 @@
 import { MutationResolvers } from "../../../../generated/server-types";
 import { leaveRequestModel } from "../../../models/leaveRequest.model";
-import { userModel } from "../../../models/user.model";
-import { leaveTypeModel } from "../../../models/leaveType.model";
 
 export const updateLeaveStatus: MutationResolvers["updateLeaveStatus"] = async (
   _,
@@ -19,8 +17,7 @@ export const updateLeaveStatus: MutationResolvers["updateLeaveStatus"] = async (
     .populate({
       path: "userId",
       populate: { path: "leaveType" },
-    })
-    .populate("approver notifyTo");
+    });
 
   if (!updatedRequest) throw new Error("Leave request not found");
 
