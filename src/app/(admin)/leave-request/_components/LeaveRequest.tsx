@@ -63,7 +63,7 @@ export default function LeaveRequest() {
   const leaveTypeLabels: Record<string, string> = {
     paidLeave: "Цалинтай чөлөө",
     casualLeave: "Энгийн амралт",
-    remoteWork: "Цалинтай чөлөө",
+    remoteWork: "Зайнаас ажилласан",
     annualLeave: "Ээлжийн амралт",
   };
 
@@ -71,7 +71,6 @@ export default function LeaveRequest() {
     (req: any) => {
       const start = new Date(Number(req.startDate));
       const end = new Date(Number(req.endDate));
-
       const dateRange = `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
 
       const duration =
@@ -97,9 +96,21 @@ export default function LeaveRequest() {
     }
   );
 
-  const filteredRequests = convertedLeaveRequests.filter(
-    (request) => activeFilter === "all" || request.status === activeFilter
-  );
+  const filteredRequests = (() => {
+    const filtered = convertedLeaveRequests.filter(
+      (request) => activeFilter === "all" || request.status === activeFilter
+    );
+
+    if (activeFilter === "all") {
+      return filtered.sort((a, b) => {
+        if (a.status === "PENDING" && b.status !== "PENDING") return -1;
+        if (a.status !== "PENDING" && b.status === "PENDING") return 1;
+        return 0;
+      });
+    }
+
+    return filtered;
+  })();
 
   const handleStatusChange = async (
     requestId: string,
