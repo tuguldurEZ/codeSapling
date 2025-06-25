@@ -40,7 +40,7 @@ const Sidebar = () => {
             className="flex gap-[10px] items-center px-6 py-2 w-full"
           >
             <User />
-            <p className=" text-[14px] font-bold">Ажилтан хэсэг</p>
+            <p className=" text-[14px] font-bold">Ажилтан. хэсэг</p>
           </ToggleGroupItem>
         </Link>
       </ToggleGroup>
