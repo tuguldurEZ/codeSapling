@@ -22,13 +22,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") || "" : "";
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ApolloWrapper>
-          <EmployeeProvider>
+          <EmployeeProvider key={token}>
             <LeaveRequestProvider>
               <Toaster />
               {children}
