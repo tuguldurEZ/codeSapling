@@ -21,6 +21,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useVerifyOtpMutation } from "../../../../../generated/client-types";
 import { useRouter } from "next/navigation";
+import { useEmployee } from "@/app/_context/employeeContext";
 
 const FormSchema = z.object({
   pin: z.string().length(4, {
@@ -29,6 +30,7 @@ const FormSchema = z.object({
 });
 
 const SecondStep = ({ email }: { email: string }) => {
+  const { login } = useEmployee();
   const router = useRouter();
   const [verifyOtp, { loading }] = useVerifyOtpMutation();
   const [value, setValue] = useState("");
@@ -50,17 +52,18 @@ const SecondStep = ({ email }: { email: string }) => {
       });
 
       const token = response?.data?.verifyOtp?.token;
-      const role = response?.data?.verifyOtp?.role;
 
+      const role = response?.data?.verifyOtp?.role;
       if (token && role) {
         localStorage.setItem("token", token);
+        await login(token);
 
         toast.success("Амжилттай нэвтэрлээ!");
 
         if (role === "ADMIN") {
-          router.push("/dashboard");
+          router.push("/employee-dashboard");
         } else {
-          router.push("/");
+          router.push("/employee-dashboard");
         }
       } else {
         toast.error("OTP баталгаажуулалт амжилтгүй боллоо.");

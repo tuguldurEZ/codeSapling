@@ -2,31 +2,13 @@ import { Clock, House, Truck } from "lucide-react";
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import Link from "next/link";
-import Image from "next/image";
+import { useEmployee } from "@/app/_context/employeeContext";
 
 const Sidebar = () => {
+  const { currentUser } = useEmployee();
+  console.log("asdasd", currentUser);
   return (
     <div className="w-[288px] py-5 px-[20px] flex flex-col h-[91vh] gap-10 bg-[#ffffff]">
-      <Link href="/">
-        <div className="flex  gap-3">
-          <Image
-            src="https://logowik.com/content/uploads/images/abstract-logo2696.logowik.com.webp"
-            alt=""
-            width={46}
-            height={37}
-            className="w-[46px] h-[37.29px]"
-          />
-          <div>
-            <div className="flex items-center ">
-              <p className="text-[#09090B] text-[18px] font-bold tracking-[-0.5px] ">
-                CodeSapling
-              </p>
-            </div>
-            <p className="text-[12px] text-[#71717A]">hackathon</p>
-          </div>
-        </div>
-      </Link>
-
       <ToggleGroup type="single" className="flex flex-col items-start gap-4">
         <Link href="employee-dashboard">
           <ToggleGroupItem
@@ -55,6 +37,17 @@ const Sidebar = () => {
             <p className=" text-[14px] font-bold">Миний хүсэлтүүд</p>
           </ToggleGroupItem>
         </Link>
+        {currentUser?.role === "ADMIN" && (
+          <Link href="dashboard">
+            <ToggleGroupItem
+              value="d"
+              className="flex gap-[10px] items-center px-6 py-2 w-full"
+            >
+              <Clock />
+              <p className=" text-[14px] font-bold">Админ MODE</p>
+            </ToggleGroupItem>
+          </Link>
+        )}
       </ToggleGroup>
     </div>
   );
