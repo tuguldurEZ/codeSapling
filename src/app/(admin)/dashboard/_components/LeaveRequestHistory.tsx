@@ -1,14 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import {
-  CalendarDays,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Users,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Users } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import EmployeeLeaveDashboard from "./EmployeeLeaveDashboard";
 
