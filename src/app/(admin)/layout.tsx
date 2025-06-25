@@ -12,6 +12,7 @@ type Props = {
 
 const AuthLayout = ({ children }: Props) => {
   const { currentUser } = useEmployee();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const AuthLayout = ({ children }: Props) => {
   }, [currentUser, router]);
 
   if (!currentUser || currentUser.role !== "ADMIN") {
-    return null;
+    return <div>Хандах эрхгүй байна</div>;
   }
 
   return (
