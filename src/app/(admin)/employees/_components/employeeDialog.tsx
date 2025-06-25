@@ -101,7 +101,12 @@ export default function EmployeeDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">+ Ажилтан нэмэх</Button>
+        <Button
+          variant="outline"
+          className="bg-black text-white hover:bg-black hover:text-white cursor-pointer"
+        >
+          + Ажилтан нэмэх
+        </Button>
       </DialogTrigger>
       <DialogContent className="w-[589px] h-auto flex-col p-8">
         <DialogHeader>

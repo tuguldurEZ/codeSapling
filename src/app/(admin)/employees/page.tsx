@@ -22,7 +22,7 @@ const EmployeesPage = () => {
     return fullName.includes(searchTerm.toLowerCase());
   });
   return (
-    <div className="py-5 px-6 w-[78vw] flex mt-5 flex-col gap-5 bg-white h-[95vh] rounded-lg overflow-auto">
+    <div className="py-5 px-6 w-[78vw] m-auto flex mt-5 flex-col gap-5 bg-white h-[95vh] rounded-lg overflow-auto">
       <div className="flex justify-between items-center w-full">
         <p className="font-semibold text-xl ">Ажилтнуудын удирдлага</p>
         <div className="flex items-center gap-6">
