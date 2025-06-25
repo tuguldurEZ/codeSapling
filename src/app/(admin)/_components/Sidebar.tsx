@@ -1,4 +1,4 @@
-import { Clock, House, Truck } from "lucide-react";
+import { Clock, House, Truck, User } from "lucide-react";
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import Link from "next/link";
@@ -39,8 +39,8 @@ const Sidebar = () => {
             value="c"
             className="flex gap-[10px] items-center px-6 py-2 w-full"
           >
-            <Clock />
-            <p className=" text-[14px] font-bold">Ажилтан MODE</p>
+            <User />
+            <p className=" text-[14px] font-bold">Ажилтан хэсэг</p>
           </ToggleGroupItem>
         </Link>
       </ToggleGroup>
