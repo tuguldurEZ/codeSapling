@@ -6,8 +6,8 @@ export const createLeaveRequest: MutationResolvers["createLeaveRequest"] =
     const startDate = new Date(input.startDate);
     const endDate = new Date(input.endDate);
 
-    startDate.setUTCHours(0, 0, 0, 0);
-    endDate.setUTCHours(0, 0, 0, 0);
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
 
     const dayInMs = 1000 * 60 * 60 * 24;
     const diffInMs = endDate.getTime() - startDate.getTime();
