@@ -231,7 +231,7 @@ export type GetLeaveRequestsByUserQueryVariables = Exact<{
 }>;
 
 
-export type GetLeaveRequestsByUserQuery = { __typename?: 'Query', getLeaveRequestsByUser: Array<{ __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } }> };
+export type GetLeaveRequestsByUserQuery = { __typename?: 'Query', getLeaveRequestsByUser: Array<{ __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId?: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } | null }> };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -2,13 +2,14 @@ import { Clock, House, Truck } from "lucide-react";
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import Link from "next/link";
+import Image from "next/image";
 
 const Sidebar = () => {
   return (
     <div className="w-[288px] py-5 px-[20px] flex flex-col h-[91vh] gap-10 bg-[#ffffff]">
       <Link href="/">
         <div className="flex  gap-3">
-          <img
+          <Image
             src="https://logowik.com/content/uploads/images/abstract-logo2696.logowik.com.webp"
             alt=""
             className="w-[46px] h-[37.29px]"

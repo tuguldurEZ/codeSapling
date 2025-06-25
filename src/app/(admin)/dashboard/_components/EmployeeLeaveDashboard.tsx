@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, Calendar, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 
 export default function EmployeeLeaveDashboard() {
   const leaveData = [
