@@ -3,21 +3,29 @@ import { leaveRequestModel } from "../../../models/leaveRequest.model";
 
 export const createLeaveRequest: MutationResolvers["createLeaveRequest"] =
   async (_, { input }) => {
-    // First, create the leave request
-    const created = await leaveRequestModel.create({
+    const startDate = new Date(input.startDate);
+    const endDate = new Date(input.endDate);
+
+    startDate.setUTCHours(0, 0, 0, 0);
+    endDate.setUTCHours(0, 0, 0, 0);
+
+    const dayInMs = 1000 * 60 * 60 * 24;
+    const diffInMs = endDate.getTime() - startDate.getTime();
+    const dayCount = Math.floor(diffInMs / dayInMs) + 1;
+
+    const totalHours = dayCount * 9;
+
+    const leaveRequest = await leaveRequestModel.create({
       userId: input.userId,
-      startDate: input.startDate,
-      endDate: input.endDate,
+      startDate,
+      endDate,
       reason: input.reason,
       file: input.file,
       approver: input.approver,
       notifyTo: input.notifyTo,
       LeaveType: input.LeaveType,
+      totalHours,
     });
 
-    const populated = await leaveRequestModel
-      .findById(created._id)
-      .populate("userId approver notifyTo");
-
-    return populated;
+    return leaveRequest.populate("userId approver notifyTo");
   };

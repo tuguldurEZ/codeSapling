@@ -12,7 +12,9 @@ export const userTypeDefs = gql`
     employedDate: String!
     phone: Int!
     employeeRole: String!
+    leaveType: LeaveTypeRecord
   }
+
   input UserInput {
     email: String!
     role: String

@@ -3,7 +3,7 @@ import { queryTypeDefs } from "./schema";
 import { userTypeDefs } from "./user.schema";
 import { leaveTypeDefs } from "./leave-type.schema";
 import { roleTypeDefs } from "./role.schema";
-import { leaveRequestDefs } from "./LeaveRequest";
+import { leaveRequestDefs } from "./LeaveRequest.schema";
 
 export const typeDefs = mergeTypeDefs([
   queryTypeDefs,

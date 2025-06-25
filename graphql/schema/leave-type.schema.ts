@@ -1,7 +1,7 @@
 import { gql } from "apollo-server-micro";
 
 export const leaveTypeDefs = gql`
-  type LeaveType {
+  type LeaveTypeRecord {
     _id: ID!
     casualLeave: Int
     paidLeave: Int

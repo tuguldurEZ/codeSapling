@@ -3,7 +3,7 @@ import { leaveTypeEnum, leaveTypeStatusEnum } from "../../utils/constants/enum";
 
 const leaveRequestschema = new Schema(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     status: {
