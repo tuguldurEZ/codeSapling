@@ -1,5 +1,6 @@
 "use client";
 import { useLeaveRequest } from "@/app/_context/leaveRequestContext";
+import Loading from "@/components/Loading";
 import {
   CalendarDays,
   ChartLine,
@@ -12,7 +13,7 @@ import React from "react";
 const StatusDashboard = () => {
   const { leaveRequests, isLoading } = useLeaveRequest();
 
-  if (isLoading) return <p className="px-6 py-4">Уншиж байна...</p>;
+  if (isLoading) return <Loading />;
   if (!leaveRequests)
     return <p className="px-6 py-4 text-red-500">Алдаа: Өгөгдөл олдсонгүй</p>;
 
