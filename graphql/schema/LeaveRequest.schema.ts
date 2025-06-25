@@ -4,8 +4,8 @@ export const leaveRequestDefs = gql`
   enum LeaveType {
     casualLeave
     paidLeave
-    annualLeave
     remoteWork
+    annualLeave
   }
 
   enum LeaveStatus {
