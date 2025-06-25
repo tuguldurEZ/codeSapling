@@ -199,7 +199,7 @@ export default function LeaveRequestPage() {
               <div className="flex items-center gap-3 mb-4">
                 <Home className="w-5 h-5 text-gray-600" />
                 <span className="text-gray-700 font-medium">
-                  Эзлэхийн амралт
+                  Ээлжийн амралт
                 </span>
               </div>
               <div className="flex justify-between items-end">
@@ -255,9 +255,10 @@ export default function LeaveRequestPage() {
                     <SelectValue placeholder="Чөлөө хүсэх шалтгаан" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="sick">Өвчтэй</SelectItem>
-                    <SelectItem value="personal">Хувийн асуудал</SelectItem>
-                    <SelectItem value="vacation">Амралт</SelectItem>
+                    <SelectItem value="casual">Чөлөө</SelectItem>
+                    <SelectItem value="payed">Цалинтай чөлөө</SelectItem>
+                    <SelectItem value="remote">Зайнаас ажиллах</SelectItem>
+                    <SelectItem value="vacation">Ээлжийн амралт</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
