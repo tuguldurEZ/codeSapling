@@ -226,6 +226,13 @@ export type GetLeaveRequestsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetLeaveRequestsQuery = { __typename?: 'Query', getLeaveRequests: Array<{ __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId?: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } | null }> };
 
+export type GetLeaveRequestsByUserQueryVariables = Exact<{
+  userId: Scalars['ID']['input'];
+}>;
+
+
+export type GetLeaveRequestsByUserQuery = { __typename?: 'Query', getLeaveRequestsByUser: Array<{ __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } }> };
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -360,6 +367,68 @@ export type GetLeaveRequestsQueryHookResult = ReturnType<typeof useGetLeaveReque
 export type GetLeaveRequestsLazyQueryHookResult = ReturnType<typeof useGetLeaveRequestsLazyQuery>;
 export type GetLeaveRequestsSuspenseQueryHookResult = ReturnType<typeof useGetLeaveRequestsSuspenseQuery>;
 export type GetLeaveRequestsQueryResult = Apollo.QueryResult<GetLeaveRequestsQuery, GetLeaveRequestsQueryVariables>;
+export const GetLeaveRequestsByUserDocument = gql`
+    query GetLeaveRequestsByUser($userId: ID!) {
+  getLeaveRequestsByUser(userId: $userId) {
+    id
+    userId {
+      _id
+      email
+      password
+      role
+      otpcode
+      firstName
+      lastName
+      employedDate
+      phone
+      employeeRole
+    }
+    startDate
+    endDate
+    status
+    totalHours
+    reason
+    file
+    rejectionReason
+    LeaveType
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetLeaveRequestsByUserQuery__
+ *
+ * To run a query within a React component, call `useGetLeaveRequestsByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLeaveRequestsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLeaveRequestsByUserQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetLeaveRequestsByUserQuery(baseOptions: Apollo.QueryHookOptions<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables> & ({ variables: GetLeaveRequestsByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables>(GetLeaveRequestsByUserDocument, options);
+      }
+export function useGetLeaveRequestsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables>(GetLeaveRequestsByUserDocument, options);
+        }
+export function useGetLeaveRequestsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables>(GetLeaveRequestsByUserDocument, options);
+        }
+export type GetLeaveRequestsByUserQueryHookResult = ReturnType<typeof useGetLeaveRequestsByUserQuery>;
+export type GetLeaveRequestsByUserLazyQueryHookResult = ReturnType<typeof useGetLeaveRequestsByUserLazyQuery>;
+export type GetLeaveRequestsByUserSuspenseQueryHookResult = ReturnType<typeof useGetLeaveRequestsByUserSuspenseQuery>;
+export type GetLeaveRequestsByUserQueryResult = Apollo.QueryResult<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables>;
 export const GetUsersDocument = gql`
     query GetUsers {
   getUsers {
