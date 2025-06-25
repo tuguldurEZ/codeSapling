@@ -19,7 +19,7 @@ export const editLeaveRequest: MutationResolvers["editLeaveRequest"] = async (
       },
       { new: true }
     )
-    .populate("userId approver notifyTo");
+    .populate("userId");
   if (!updated) throw new Error("Leave request not found");
   return updated;
 };

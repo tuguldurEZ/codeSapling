@@ -27,5 +27,5 @@ export const createLeaveRequest: MutationResolvers["createLeaveRequest"] =
       totalHours,
     });
 
-    return leaveRequest.populate("userId approver notifyTo");
+    return leaveRequest.populate("userId");
   };
