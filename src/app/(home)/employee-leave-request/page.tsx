@@ -252,7 +252,7 @@ export default function LeaveRequestPage() {
               <div>
                 <Select onValueChange={setReason}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Чөлөө хүсэх шалтгаан" />
+                    <SelectValue placeholder="Чөлөөний төрөл" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="casual">Чөлөө</SelectItem>
