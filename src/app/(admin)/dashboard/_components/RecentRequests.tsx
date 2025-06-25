@@ -65,7 +65,7 @@ const RecentRequests = () => {
       <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-[500px]">
         <p className="font-bold text-[20px]">Сүүлийн хүсэлтүүд</p>
 
-        {leaveRequests.map((leave, index) => {
+        {leaveRequests.slice(0,3).map((leave, index) => {
           const user = leave.userId;
           if (!user) return null;
 
