@@ -233,6 +233,15 @@ export type GetLeaveRequestsByUserQueryVariables = Exact<{
 
 export type GetLeaveRequestsByUserQuery = { __typename?: 'Query', getLeaveRequestsByUser: Array<{ __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId?: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } | null }> };
 
+export type UpdateLeaveStatusMutationVariables = Exact<{
+  updateLeaveStatusId: Scalars['ID']['input'];
+  status: LeaveStatus;
+  rejectionReason?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateLeaveStatusMutation = { __typename?: 'Mutation', updateLeaveStatus: { __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId?: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string, leaveType?: { __typename?: 'LeaveTypeRecord', _id: string, casualLeave?: number | null, paidLeave?: number | null, annualLeave?: number | null, remoteWork?: number | null } | null } | null } };
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -429,6 +438,74 @@ export type GetLeaveRequestsByUserQueryHookResult = ReturnType<typeof useGetLeav
 export type GetLeaveRequestsByUserLazyQueryHookResult = ReturnType<typeof useGetLeaveRequestsByUserLazyQuery>;
 export type GetLeaveRequestsByUserSuspenseQueryHookResult = ReturnType<typeof useGetLeaveRequestsByUserSuspenseQuery>;
 export type GetLeaveRequestsByUserQueryResult = Apollo.QueryResult<GetLeaveRequestsByUserQuery, GetLeaveRequestsByUserQueryVariables>;
+export const UpdateLeaveStatusDocument = gql`
+    mutation UpdateLeaveStatus($updateLeaveStatusId: ID!, $status: LeaveStatus!, $rejectionReason: String) {
+  updateLeaveStatus(
+    id: $updateLeaveStatusId
+    status: $status
+    rejectionReason: $rejectionReason
+  ) {
+    id
+    userId {
+      _id
+      email
+      password
+      role
+      otpcode
+      firstName
+      lastName
+      employedDate
+      phone
+      employeeRole
+      leaveType {
+        _id
+        casualLeave
+        paidLeave
+        annualLeave
+        remoteWork
+      }
+    }
+    startDate
+    endDate
+    status
+    totalHours
+    reason
+    file
+    rejectionReason
+    LeaveType
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type UpdateLeaveStatusMutationFn = Apollo.MutationFunction<UpdateLeaveStatusMutation, UpdateLeaveStatusMutationVariables>;
+
+/**
+ * __useUpdateLeaveStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateLeaveStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateLeaveStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateLeaveStatusMutation, { data, loading, error }] = useUpdateLeaveStatusMutation({
+ *   variables: {
+ *      updateLeaveStatusId: // value for 'updateLeaveStatusId'
+ *      status: // value for 'status'
+ *      rejectionReason: // value for 'rejectionReason'
+ *   },
+ * });
+ */
+export function useUpdateLeaveStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateLeaveStatusMutation, UpdateLeaveStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateLeaveStatusMutation, UpdateLeaveStatusMutationVariables>(UpdateLeaveStatusDocument, options);
+      }
+export type UpdateLeaveStatusMutationHookResult = ReturnType<typeof useUpdateLeaveStatusMutation>;
+export type UpdateLeaveStatusMutationResult = Apollo.MutationResult<UpdateLeaveStatusMutation>;
+export type UpdateLeaveStatusMutationOptions = Apollo.BaseMutationOptions<UpdateLeaveStatusMutation, UpdateLeaveStatusMutationVariables>;
 export const GetUsersDocument = gql`
     query GetUsers {
   getUsers {

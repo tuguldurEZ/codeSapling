@@ -15,6 +15,10 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useLeaveRequest } from "@/app/_context/leaveRequestContext";
+import {
+  LeaveStatus,
+  useUpdateLeaveStatusMutation,
+} from "../../../../../generated/client-types";
 
 type RequestStatus = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -55,7 +59,7 @@ export default function LeaveRequest() {
   const [activeFilter, setActiveFilter] = useState<"all" | RequestStatus>(
     "all"
   );
-
+  const [updateLeaveStatus, { loading }] = useUpdateLeaveStatusMutation();
   if (!leaveRequests) {
     return <div>Түр хүлээнэ үү...</div>;
   }
@@ -116,15 +120,12 @@ export default function LeaveRequest() {
     requestId: string,
     newStatus: RequestStatus
   ) => {
-    try {
-      await fetch("/api/update-leave-status", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ requestId, newStatus }),
-      });
-    } catch (error) {
-      console.error("Status update failed", error);
-    }
+    await updateLeaveStatus({
+      variables: {
+        updateLeaveStatusId: requestId,
+        status: newStatus as LeaveStatus,
+      },
+    });
   };
 
   const filters = [

@@ -65,4 +65,46 @@ export const CREATE_LEAVE_REQUEST = gql`
       updatedAt
     }
   }
+  mutation UpdateLeaveStatus(
+    $updateLeaveStatusId: ID!
+    $status: LeaveStatus!
+    $rejectionReason: String
+  ) {
+    updateLeaveStatus(
+      id: $updateLeaveStatusId
+      status: $status
+      rejectionReason: $rejectionReason
+    ) {
+      id
+      userId {
+        _id
+        email
+        password
+        role
+        otpcode
+        firstName
+        lastName
+        employedDate
+        phone
+        employeeRole
+        leaveType {
+          _id
+          casualLeave
+          paidLeave
+          annualLeave
+          remoteWork
+        }
+      }
+      startDate
+      endDate
+      status
+      totalHours
+      reason
+      file
+      rejectionReason
+      LeaveType
+      createdAt
+      updatedAt
+    }
+  }
 `;
