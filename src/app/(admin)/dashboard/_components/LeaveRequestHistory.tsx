@@ -27,17 +27,19 @@ const restEmployees: Employee[] = [
   { name: "Батбаяр", role: "Менежер", days: 0, avatar: "ББ" },
 ];
 
+interface SectionHeaderProps {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  onPrevious: () => void;
+  onNext: () => void;
+}
+
 function SectionHeader({
   icon: Icon,
   title,
   onPrevious,
   onNext,
-}: {
-  icon: React.ComponentType<any>;
-  title: string;
-  onPrevious: () => void;
-  onNext: () => void;
-}) {
+}: SectionHeaderProps) {
   return (
     <div className="flex items-center justify-between mb-4">
       <div className="flex items-center gap-2">
@@ -74,15 +76,13 @@ const EmployeeCard = ({ employee }: { employee: Employee }) => (
   </div>
 );
 
-const EmployeeSection = ({
-  title,
-  icon,
-  employees,
-}: {
+interface EmployeeSectionProps {
   title: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   employees: Employee[];
-}) => (
+}
+
+const EmployeeSection = ({ title, icon, employees }: EmployeeSectionProps) => (
   <Card className="ml-4 ">
     <CardHeader className="pb-4">
       <SectionHeader
@@ -113,19 +113,16 @@ const EmployeeSection = ({
 const LeaveRequestHistory = () => {
   return (
     <div className="flex flex-col gap-5">
-      {/* Чөлөөний товч мэдээлэл */}
       <div className="">
         <EmployeeLeaveDashboard />
       </div>
 
-      {/* Зайнаас ажилласан хэсэг */}
       <EmployeeSection
         icon={Clock}
         title="6-р сар зайнаас ажилласан"
         employees={remoteEmployees}
       />
 
-      {/* Ээлжийн амралт хэсэг */}
       <EmployeeSection
         icon={Users}
         title="6-р сар ээлжийн амралт"

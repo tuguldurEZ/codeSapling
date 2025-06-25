@@ -1,0 +1,109 @@
+type AuthResponse {
+  message: String!
+  role: String!
+  token: String!
+}
+
+input LeaveInput {
+  annualLeave: Int
+  casualLeave: Int
+  paidLeave: Int
+  remoteWork: Int
+}
+
+type LeaveRequest {
+  LeaveType: LeaveType!
+  approver: User
+  createdAt: String!
+  endDate: String!
+  file: String
+  id: ID!
+  notifyTo: [User!]
+  reason: String!
+  rejectionReason: String
+  startDate: String!
+  status: LeaveStatus!
+  totalHours: Float
+  updatedAt: String!
+  userId: User
+}
+
+enum LeaveStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+enum LeaveType {
+  annualLeave
+  casualLeave
+  paidLeave
+  remoteWork
+}
+
+type LeaveTypeRecord {
+  _id: ID!
+  annualLeave: Int
+  casualLeave: Int
+  paidLeave: Int
+  remoteWork: Int
+}
+
+type Mutation {
+  createEmployee(input: UserInput!): User!
+  createLeaveRequest(input: RequestInput!): LeaveRequest!
+  createRole(role: String!): Boolean!
+  deleteLeaveRequest(id: ID!): Boolean!
+  deleteRole(_id: ID!): Boolean!
+  editLeaveRequest(id: ID!, input: RequestInput!): LeaveRequest!
+  editRole(_id: ID!, role: String!): Boolean!
+  leaveRequirement(input: LeaveInput!): LeaveType!
+  sendOtp(email: String!): User!
+  setNewPassword(email: String!, newPassword: String!): String!
+  updateLeaveStatus(id: ID!, rejectionReason: String, status: LeaveStatus!): LeaveRequest!
+  verifyOtp(email: String!, otp: Int!): AuthResponse!
+}
+
+type Query {
+  getCurrentUser(JWT: String!): User!
+  getLeaveRequestById(id: ID!): LeaveRequest
+  getLeaveRequests: [LeaveRequest!]!
+  getLeaveRequestsByUser(userId: ID!): [LeaveRequest!]!
+  getUsers: [User!]!
+  sampleQuery: String
+}
+
+input RequestInput {
+  LeaveType: LeaveType!
+  approver: ID!
+  endDate: String!
+  file: String
+  notifyTo: [ID!]
+  reason: String!
+  startDate: String!
+  userId: ID!
+}
+
+type User {
+  _id: ID!
+  email: String!
+  employedDate: String!
+  employeeRole: String!
+  firstName: String!
+  lastName: String!
+  leaveType: LeaveTypeRecord
+  otpcode: Int
+  password: String
+  phone: Int!
+  role: String
+}
+
+input UserInput {
+  email: String!
+  employedDate: String!
+  employeeRole: String!
+  firstName: String!
+  lastName: String!
+  phone: Int!
+  role: String
+}
