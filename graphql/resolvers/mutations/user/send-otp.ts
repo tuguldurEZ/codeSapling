@@ -1,4 +1,4 @@
-import { sendEmail } from "../../../../utils/send-email";
+// import { sendEmail } from "../../../../utils/send-email";
 import { userModel } from "../../../models/user.model";
 
 export const sendOtp = async (_: unknown, { email }: { email: string }) => {
@@ -7,10 +7,10 @@ export const sendOtp = async (_: unknown, { email }: { email: string }) => {
   if (!user) {
     throw new Error("user not found");
   }
-  await sendEmail({
-    email,
-    content: `<p>${otpcode}</p>`,
-    tittle: "Your OTP code",
-  });
+  // await sendEmail({
+  //   email,
+  //   content: `<p>${otpcode}</p>`,
+  //   tittle: "Your OTP code",
+  // });
   return user;
 };
