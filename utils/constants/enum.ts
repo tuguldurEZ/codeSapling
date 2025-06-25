@@ -12,5 +12,6 @@ export enum leaveTypeStatusEnum {
 export enum leaveTypeEnum {
   casualLeave = "casualLeave",
   paidLeave = "paidLeave",
-  annualLeave = "REJECTED",
+  annualLeave = "annualLeave",
+  remoteWork = "remoteWork",
 }

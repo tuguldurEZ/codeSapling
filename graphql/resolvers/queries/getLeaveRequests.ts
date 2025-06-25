@@ -3,5 +3,7 @@ import { leaveRequestModel } from "../../models/leaveRequest.model";
 
 export const getLeaveRequests: QueryResolvers["getLeaveRequests"] =
   async () => {
-    return await leaveRequestModel.find().populate("userId approver notifyTo");
+    const requests = await leaveRequestModel.find().populate("userId");
+
+    return requests.filter((request) => request.userId !== null);
   };

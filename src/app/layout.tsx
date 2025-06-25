@@ -4,6 +4,7 @@ import "./globals.css";
 import ApolloWrapper from "@/components/AppoloWrapper";
 import EmployeeProvider from "./_context/employeeContext";
 import { Toaster } from "sonner";
+import LeaveRequestProvider from "./_context/leaveRequestContext";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -28,8 +29,10 @@ export default function RootLayout({
       >
         <ApolloWrapper>
           <EmployeeProvider>
-            <Toaster />
-            {children}
+            <LeaveRequestProvider>
+              <Toaster />
+              {children}
+            </LeaveRequestProvider>
           </EmployeeProvider>
         </ApolloWrapper>
       </body>

@@ -3,7 +3,6 @@ import { leaveRequestModel } from "../../../models/leaveRequest.model";
 
 export const createLeaveRequest: MutationResolvers["createLeaveRequest"] =
   async (_, { input }) => {
-    // First, create the leave request
     const created = await leaveRequestModel.create({
       userId: input.userId,
       startDate: input.startDate,

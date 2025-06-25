@@ -7,10 +7,15 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { useGetCurrentUserQuery, User } from "../../../generated/client-types";
+import {
+  useGetCurrentUserQuery,
+  useGetUsersQuery,
+  User,
+} from "../../../generated/client-types";
 
 type EmployeeContextType = {
   currentUser: User | null;
+  users: User[] | null;
 };
 
 const EmployeeContext = createContext<EmployeeContextType | undefined>(
@@ -28,6 +33,7 @@ export const useEmployee = () => {
 const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const [JWT, setJWT] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[] | null>(null);
 
   useEffect(() => {
     const storedJWT = localStorage.getItem("token");
@@ -36,21 +42,30 @@ const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const { data } = useGetCurrentUserQuery({
+  const { data: currentUserData } = useGetCurrentUserQuery({
     variables: { jwt: JWT },
     skip: !JWT,
   });
 
   useEffect(() => {
-    if (data?.getCurrentUser) {
-      setCurrentUser(data.getCurrentUser);
+    if (currentUserData?.getCurrentUser) {
+      setCurrentUser(currentUserData.getCurrentUser);
     }
-  }, [data]);
+  }, [currentUserData]);
+
+  const { data: userData } = useGetUsersQuery();
+
+  useEffect(() => {
+    if (userData?.getUsers) {
+      setUsers(userData.getUsers);
+    }
+  }, [userData]);
 
   return (
     <EmployeeContext.Provider
       value={{
         currentUser,
+        users,
       }}
     >
       {children}

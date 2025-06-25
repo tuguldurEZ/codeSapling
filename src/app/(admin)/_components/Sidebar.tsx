@@ -20,7 +20,7 @@ const Sidebar = () => {
         </div>
       </Link>
 
-      <ToggleGroup type="single" className="flex flex-col items-start gap-6">
+      <ToggleGroup type="single" className="flex flex-col items-start gap-4">
         <Link href="dashboard">
           <ToggleGroupItem
             value="a"

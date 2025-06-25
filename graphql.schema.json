@@ -438,7 +438,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "REJECTED",
+            "name": "annualLeave",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -451,6 +451,12 @@
           },
           {
             "name": "paidLeave",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "remoteWork",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
