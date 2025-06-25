@@ -111,15 +111,17 @@ const RecentRequests = () => {
           </div>
           <p className="text-[30px] font-bold">{users?.length}</p>
         </div>
-        {Object.entries(roleCounts || {}).map(([role, count]) => (
-          <div
-            key={role}
-            className="flex rounded-[4px] h-[40px] bg-[#FAFAFA] p-2 items-center justify-between w-full"
-          >
-            <p className="text-[#404040] font-medium">{role}</p>
-            <p className="text-[30px] font-bold">{count}</p>
-          </div>
-        ))}
+        {Object.entries(roleCounts || {})
+          .slice(0, 3)
+          .map(([role, count]) => (
+            <div
+              key={role}
+              className="flex rounded-[4px] h-[40px] bg-[#FAFAFA] p-2 items-center justify-between w-full"
+            >
+              <p className="text-[#404040] font-medium">{role}</p>
+              <p className="text-[30px] font-bold">{count}</p>
+            </div>
+          ))}
         <button className="text-end text-[#717171] text-[14px]">
           Дэлгэрэнгүй
         </button>

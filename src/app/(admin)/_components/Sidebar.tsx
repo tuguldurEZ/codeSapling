@@ -8,14 +8,18 @@ const Sidebar = () => {
     <div className="w-[288px] py-5 px-[20px] flex flex-col h-[91vh] gap-10 bg-[#ffffff]">
       <Link href="/">
         <div className="flex  gap-3">
-          <img src="/logo.svg" alt="" className="w-[46px] h-[37.29px]" />
+          <img
+            src="https://logowik.com/content/uploads/images/abstract-logo2696.logowik.com.webp"
+            alt=""
+            className="w-[46px] h-[37.29px]"
+          />
           <div>
             <div className="flex items-center ">
               <p className="text-[#09090B] text-[18px] font-bold tracking-[-0.5px] ">
-                NomNom
+                CodeSapling
               </p>
             </div>
-            <p className="text-[12px] text-[#71717A]">Swift delivery</p>
+            <p className="text-[12px] text-[#71717A]">hackathon</p>
           </div>
         </div>
       </Link>

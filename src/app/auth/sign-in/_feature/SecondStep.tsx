@@ -65,9 +65,9 @@ const SecondStep = ({ email }: { email: string }) => {
       } else {
         toast.error("OTP баталгаажуулалт амжилтгүй боллоо.");
       }
-    } catch (err: any) {
-      const errorMessage = err.message || "Алдаа гарлаа";
-      toast.error(errorMessage);
+    } catch (error) {
+      console.log(error);
+      toast.error("TP код буруу байна");
       form.setError("pin", {
         message: "OTP код буруу байна",
       });
