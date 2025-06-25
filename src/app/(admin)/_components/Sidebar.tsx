@@ -34,6 +34,15 @@ const Sidebar = () => {
             <p className=" text-[14px] font-bold">Чөлөөны хүсэлтүүд</p>
           </ToggleGroupItem>
         </Link>
+        <Link href="employee-dashboard">
+          <ToggleGroupItem
+            value="c"
+            className="flex gap-[10px] items-center px-6 py-2 w-full"
+          >
+            <Clock />
+            <p className=" text-[14px] font-bold">Ажилтан MODE</p>
+          </ToggleGroupItem>
+        </Link>
       </ToggleGroup>
     </div>
   );

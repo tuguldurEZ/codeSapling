@@ -11,17 +11,24 @@ type Props = {
 };
 
 const AuthLayout = ({ children }: Props) => {
-  const { currentUser } = useEmployee();
+  const { currentUser, isLoading } = useEmployee();
   const router = useRouter();
 
   useEffect(() => {
-    if (currentUser && currentUser.role !== "ADMIN") {
-      router.push("/");
+    if (!isLoading && !currentUser) {
+      router.push("/auth/sign-in");
     }
-  }, [currentUser, router]);
+    if (currentUser && currentUser.role !== "ADMIN") {
+      router.push("/employee-dashboard");
+    }
+  }, [currentUser, isLoading, router]);
 
-  if (!currentUser || currentUser.role !== "ADMIN") {
-    return null;
+  if (isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p>Ачааллаж байна...</p>
+      </div>
+    );
   }
 
   return (

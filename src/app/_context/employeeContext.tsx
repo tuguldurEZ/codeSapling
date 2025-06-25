@@ -20,6 +20,7 @@ type EmployeeContextType = {
   users: User[] | null;
   login: (_token: string) => void;
   logout: () => void;
+  isLoading: boolean;
 };
 
 const EmployeeContext = createContext<EmployeeContextType | undefined>(
@@ -39,71 +40,58 @@ const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const [JWT, setJWT] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[] | null>(null);
-  const [isReady, setIsReady] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [getCurrentUser] = useGetCurrentUserLazyQuery();
-
   const { data: userData } = useGetUsersQuery();
   console.log(JWT);
-  // Load token from localStorage when mounted
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setJWT(token);
-      getCurrentUser({ variables: { jwt: token } });
-    }
-    setIsReady(true);
-  }, []);
+    const init = async () => {
+      const token = localStorage.getItem("token");
 
-  // React when currentUserData changes
-  // useEffect(() => {
-  //   if (currentUserData?.getCurrentUser) {
-  //     setCurrentUser(currentUserData.getCurrentUser);
-  //   } else {
-  //     setCurrentUser(null); // fallback in case token is invalid
-  //   }
-  // }, []);
+      if (token) {
+        setJWT(token);
+        try {
+          const result = await getCurrentUser({ variables: { jwt: token } });
+          if (result.data?.getCurrentUser) {
+            setCurrentUser(result.data.getCurrentUser);
+          }
+        } catch (err) {
+          console.error("Fetch currentUser failed:", err);
+        }
+      }
 
-  // Get all users
+      setIsLoading(false);
+    };
+
+    init();
+  }, [getCurrentUser]);
+
   useEffect(() => {
     if (userData?.getUsers) {
       setUsers(userData.getUsers);
     }
   }, [userData]);
 
-  // Login method
-  // const login = useCallback(
-  //   (token: string) => {
-  //     localStorage.setItem("token", token);
-  //     setJWT(token);
-  //     const result = getCurrentUser({ variables: { jwt: token } });
-  //     console.log(result);
-
-  //     // setCurrentUser(result.)
-  //     // console.log(result, 'result');
-  //   },
-  //   [getCurrentUser]
-  // );
-
   const login = async (token: string) => {
-    const result = await getCurrentUser({ variables: { jwt: token } });
+    try {
+      const result = await getCurrentUser({ variables: { jwt: token } });
 
-    if (result.data?.getCurrentUser._id) {
-      localStorage.setItem("token", token);
-      setJWT(token);
-      setCurrentUser(result?.data?.getCurrentUser);
+      if (result.data?.getCurrentUser._id) {
+        localStorage.setItem("token", token);
+        setJWT(token);
+        setCurrentUser(result.data.getCurrentUser);
+      }
+    } catch (err) {
+      console.error("Login failed:", err);
     }
   };
 
-  // Logout method
   const logout = useCallback(() => {
     localStorage.removeItem("token");
     setJWT("");
     setCurrentUser(null);
-    client.clearStore(); // clear Apollo cache
+    client.clearStore();
   }, [client]);
-
-  if (!isReady) return null;
 
   return (
     <EmployeeContext.Provider
@@ -112,6 +100,7 @@ const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         users,
         login,
         logout,
+        isLoading,
       }}
     >
       {children}
