@@ -10,6 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import EmployeeLeaveDashboard from "./EmployeeLeaveDashboard";
 
 interface Employee {
   name: string;
@@ -61,12 +62,16 @@ function SectionHeader({
 }
 
 const EmployeeCard = ({ employee }: { employee: Employee }) => (
-  <div className="text-center p-4 rounded-lg bg-gray-50">
-    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium mx-auto mb-2">
-      {employee.avatar}
+  <div className="text-start w-[300px] p-4 rounded-lg border-gray-100 border-[1px] bg-white">
+    <div className="flex">
+      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium mr-2 mb-2">
+        {employee.avatar}
+      </div>
+      <div>
+        <h4 className="font-medium text-gray-900 mb-1">{employee.name}</h4>
+        <p className="text-sm text-gray-500 mb-2">{employee.role}</p>
+      </div>
     </div>
-    <h4 className="font-medium text-gray-900 mb-1">{employee.name}</h4>
-    <p className="text-sm text-gray-500 mb-2">{employee.role}</p>
     <div className="text-2xl font-bold text-gray-900 mb-1">
       {employee.days} өдөр
     </div>
@@ -83,7 +88,7 @@ const EmployeeSection = ({
   icon: React.ComponentType<any>;
   employees: Employee[];
 }) => (
-  <Card>
+  <Card className="ml-4 ">
     <CardHeader className="pb-4">
       <SectionHeader
         icon={icon}
@@ -98,8 +103,11 @@ const EmployeeSection = ({
           <EmployeeCard key={index} employee={employee} />
         ))}
       </div>
-      <div className="flex justify-center">
-        <Button variant="ghost" className="text-blue-600 hover:text-blue-700">
+      <div className="flex justify-end">
+        <Button
+          variant="ghost"
+          className="text-gray-600 text-sm font-normal hover:text-blue-700"
+        >
           Цааш нь
         </Button>
       </div>
@@ -111,28 +119,8 @@ const LeaveRequestHistory = () => {
   return (
     <div className="flex flex-col gap-5">
       {/* Чөлөөний товч мэдээлэл */}
-      <div className="w-full flex flex-wrap gap-5 p-4">
-        {["6 сар чөлөө авсан", "6 сар цалинтай чөлөө"].map((label, index) => (
-          <div
-            key={index}
-            className="p-6 flex flex-col gap-5 rounded-lg bg-white w-[500px]"
-          >
-            <div className="flex justify-between items-center">
-              <div className="flex gap-2 items-center">
-                <CalendarDays className="w-5 h-5" />
-                <p className="font-medium text-[18px]">{label}</p>
-              </div>
-              <div className="flex gap-2">
-                <button>
-                  <ChevronLeft />
-                </button>
-                <button>
-                  <ChevronRight />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="">
+        <EmployeeLeaveDashboard />
       </div>
 
       {/* Зайнаас ажилласан хэсэг */}
