@@ -2,13 +2,13 @@
   "name": "codesapling",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.ts"
-  },
+"scripts": {
+  "dev": "next dev",
+  "build": "npm run codegen && next build",
+  "start": "next start",
+  "lint": "next lint",
+  "codegen": "graphql-codegen --config codegen.ts"
+},
   "dependencies": {
     "@apollo/client": "^3.13.8",
     "@apollo/server": "^4.12.2",
