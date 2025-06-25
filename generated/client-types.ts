@@ -46,7 +46,7 @@ export type LeaveRequest = {
   status: LeaveStatus;
   totalHours?: Maybe<Scalars['Float']['output']>;
   updatedAt: Scalars['String']['output'];
-  userId: User;
+  userId?: Maybe<User>;
 };
 
 export enum LeaveStatus {
@@ -61,6 +61,15 @@ export enum LeaveType {
   PaidLeave = 'paidLeave',
   RemoteWork = 'remoteWork'
 }
+
+export type LeaveTypeRecord = {
+  __typename?: 'LeaveTypeRecord';
+  _id: Scalars['ID']['output'];
+  annualLeave?: Maybe<Scalars['Int']['output']>;
+  casualLeave?: Maybe<Scalars['Int']['output']>;
+  paidLeave?: Maybe<Scalars['Int']['output']>;
+  remoteWork?: Maybe<Scalars['Int']['output']>;
+};
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -188,6 +197,7 @@ export type User = {
   employeeRole: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
+  leaveType?: Maybe<LeaveTypeRecord>;
   otpcode?: Maybe<Scalars['Int']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   phone: Scalars['Int']['output'];
@@ -214,7 +224,7 @@ export type CreateLeaveRequestMutation = { __typename?: 'Mutation', createLeaveR
 export type GetLeaveRequestsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLeaveRequestsQuery = { __typename?: 'Query', getLeaveRequests: Array<{ __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } }> };
+export type GetLeaveRequestsQuery = { __typename?: 'Query', getLeaveRequests: Array<{ __typename?: 'LeaveRequest', id: string, startDate: string, endDate: string, status: LeaveStatus, totalHours?: number | null, reason: string, file?: string | null, rejectionReason?: string | null, LeaveType: LeaveType, createdAt: string, updatedAt: string, userId?: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } | null }> };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 

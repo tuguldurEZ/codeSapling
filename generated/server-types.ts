@@ -45,7 +45,7 @@ export type LeaveRequest = {
   status: LeaveStatus;
   totalHours?: Maybe<Scalars['Float']['output']>;
   updatedAt: Scalars['String']['output'];
-  userId: User;
+  userId?: Maybe<User>;
 };
 
 export enum LeaveStatus {
@@ -60,6 +60,15 @@ export enum LeaveType {
   PaidLeave = 'paidLeave',
   RemoteWork = 'remoteWork'
 }
+
+export type LeaveTypeRecord = {
+  __typename?: 'LeaveTypeRecord';
+  _id: Scalars['ID']['output'];
+  annualLeave?: Maybe<Scalars['Int']['output']>;
+  casualLeave?: Maybe<Scalars['Int']['output']>;
+  paidLeave?: Maybe<Scalars['Int']['output']>;
+  remoteWork?: Maybe<Scalars['Int']['output']>;
+};
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -187,6 +196,7 @@ export type User = {
   employeeRole: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
+  leaveType?: Maybe<LeaveTypeRecord>;
   otpcode?: Maybe<Scalars['Int']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   phone: Scalars['Int']['output'];
@@ -283,6 +293,7 @@ export type ResolversTypes = {
   LeaveRequest: ResolverTypeWrapper<LeaveRequest>;
   LeaveStatus: LeaveStatus;
   LeaveType: LeaveType;
+  LeaveTypeRecord: ResolverTypeWrapper<LeaveTypeRecord>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   RequestInput: RequestInput;
@@ -300,6 +311,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int']['output'];
   LeaveInput: LeaveInput;
   LeaveRequest: LeaveRequest;
+  LeaveTypeRecord: LeaveTypeRecord;
   Mutation: {};
   Query: {};
   RequestInput: RequestInput;
@@ -329,7 +341,16 @@ export type LeaveRequestResolvers<ContextType = any, ParentType extends Resolver
   status?: Resolver<ResolversTypes['LeaveStatus'], ParentType, ContextType>;
   totalHours?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  userId?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  userId?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type LeaveTypeRecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['LeaveTypeRecord'] = ResolversParentTypes['LeaveTypeRecord']> = {
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  annualLeave?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  casualLeave?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  paidLeave?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  remoteWork?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -364,6 +385,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   employeeRole?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  leaveType?: Resolver<Maybe<ResolversTypes['LeaveTypeRecord']>, ParentType, ContextType>;
   otpcode?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   phone?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -374,6 +396,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   AuthResponse?: AuthResponseResolvers<ContextType>;
   LeaveRequest?: LeaveRequestResolvers<ContextType>;
+  LeaveTypeRecord?: LeaveTypeRecordResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

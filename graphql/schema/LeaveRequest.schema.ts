@@ -16,7 +16,7 @@ export const leaveRequestDefs = gql`
 
   type LeaveRequest {
     id: ID!
-    userId: User!
+    userId: User
     startDate: String!
     endDate: String!
     status: LeaveStatus!
