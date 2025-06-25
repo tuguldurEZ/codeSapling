@@ -61,7 +61,7 @@ export default function EmployeeLeaveDashboard() {
             <div className="flex items-center space-x-2">
               <Calendar className="h-5 w-5 text-gray-600" />
               <CardTitle className="text-lg font-medium text-gray-900">
-                6-р сар челөө авсан
+                6-р сар чөлөө авсан
               </CardTitle>
             </div>
             <div className="flex items-center space-x-1">
@@ -113,7 +113,7 @@ export default function EmployeeLeaveDashboard() {
             <div className="flex items-center space-x-2">
               <TrendingUp className="h-5 w-5 text-gray-600" />
               <CardTitle className="text-lg font-medium text-gray-900">
-                6-р сар цалинтай челөө
+                6-р сар цалинтай чөлөө
               </CardTitle>
             </div>
             <div className="flex items-center space-x-1">

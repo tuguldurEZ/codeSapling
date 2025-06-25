@@ -38,10 +38,27 @@ export default function EmployeeDashboard() {
   const todayEndUTC = todayStartUTC + 24 * 60 * 60 * 1000;
 
   const todayLeaveRequests = leaveRequests?.filter((item) => {
-    const startDate = parseInt(item.startDate, 10);
-    return startDate >= todayStartUTC && startDate < todayEndUTC;
-  });
+    const start = new Date(Number(item.startDate));
+    const end = new Date(Number(item.endDate));
 
+    const startUTC = Date.UTC(
+      start.getUTCFullYear(),
+      start.getUTCMonth(),
+      start.getUTCDate()
+    );
+    const endUTC = Date.UTC(
+      end.getUTCFullYear(),
+      end.getUTCMonth(),
+      end.getUTCDate()
+    );
+
+    return (
+      startUTC <= todayEndUTC &&
+      endUTC >= todayStartUTC &&
+      item.status === "APPROVED"
+    );
+  });
+  console.log(todayLeaveRequests);
   return (
     <div className="min-h-screen w-full bg-gray-50">
       <div className="flex">
