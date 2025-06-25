@@ -59,7 +59,7 @@ export default function LeaveRequest() {
   const [activeFilter, setActiveFilter] = useState<"all" | RequestStatus>(
     "all"
   );
-  const [updateLeaveStatus, { loading }] = useUpdateLeaveStatusMutation();
+  const [updateLeaveStatus] = useUpdateLeaveStatusMutation();
   if (!leaveRequests) {
     return <div>Түр хүлээнэ үү...</div>;
   }

@@ -12,6 +12,8 @@ const Sidebar = () => {
           <Image
             src="https://logowik.com/content/uploads/images/abstract-logo2696.logowik.com.webp"
             alt=""
+            width={46}
+            height={37}
             className="w-[46px] h-[37.29px]"
           />
           <div>
