@@ -30,7 +30,7 @@ const Sidebar = () => {
             <p className=" text-[14px] font-bold">Хянах самбар</p>
           </ToggleGroupItem>
         </Link>
-        <Link href="emplooyes">
+        <Link href="employees">
           <ToggleGroupItem
             value="b"
             className="flex gap-[10px] items-center px-6 py-2 w-full"
