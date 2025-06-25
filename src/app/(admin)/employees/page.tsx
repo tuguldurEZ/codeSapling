@@ -9,7 +9,7 @@ const EmployeesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data, loading, error, refetch } = useGetUsersQuery();
-  console.log("datanuud useriin", data);
+
   if (loading) return <p className="px-6 py-4">Уншиж байна...</p>;
   if (error)
     return <p className="px-6 py-4 text-red-500">Алдаа: {error.message}</p>;
@@ -18,7 +18,7 @@ const EmployeesPage = () => {
 
   const filteredUsers = users.filter((user) => {
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
-    console.log(fullName);
+
     return fullName.includes(searchTerm.toLowerCase());
   });
   return (

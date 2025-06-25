@@ -6,7 +6,7 @@ import { useEmployee } from "@/app/_context/employeeContext";
 
 const Sidebar = () => {
   const { currentUser } = useEmployee();
-  console.log("asdasd", currentUser);
+
   return (
     <div className="w-[288px] py-5 px-[20px] flex flex-col h-[91vh] gap-10 bg-[#ffffff]">
       <ToggleGroup type="single" className="flex flex-col items-start gap-4">

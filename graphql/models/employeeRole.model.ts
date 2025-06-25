@@ -2,7 +2,7 @@ import { model, models, Schema } from "mongoose";
 
 const employeeRoleSchema = new Schema(
   {
-    role: { type: String, unique: true, required: true },
+    role: { type: String, required: true },
   },
   { timestamps: true }
 );
