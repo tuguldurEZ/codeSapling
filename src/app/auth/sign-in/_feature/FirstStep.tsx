@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
 import { useSendOtpMutation } from "../../../../../generated/client-types";
 
 const formSchema = z.object({

@@ -17,7 +17,6 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import Image from "next/image";
 import { useState } from "react";
 import { useVerifyOtpMutation } from "../../../../../generated/client-types";
 import { useRouter } from "next/navigation";
