@@ -8,6 +8,7 @@ import {
   CalendarIcon,
   Home,
   Send,
+  Check,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,12 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 export default function LeaveRequestPage() {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 5, 1)); // June 2025
@@ -28,20 +35,39 @@ export default function LeaveRequestPage() {
   const [reason, setReason] = useState<string>("");
   const [manager, setManager] = useState<string>("");
   const [note, setNote] = useState<string>("");
+  const [selectedHours, setSelectedHours] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = () => {
     const selectedInfo = {
       reason,
       manager,
       note,
-      selectedDate: selectedDate
-        ? selectedDate.toISOString().split("T")[0]
+      selectedDate: selectedDates
+        ? selectedDates.map((date) => date.toISOString().split("T")[0])
         : null,
       selectedEmployees: selectedEmployees.map((index) => employees[index]),
     };
     console.log("Selected Info:", selectedInfo);
     alert(JSON.stringify(selectedInfo, null, 2));
   };
+  const toggleHour = (hour: string) => {
+    setSelectedHours((prev) =>
+      prev.includes(hour) ? prev.filter((h) => h !== hour) : [...prev, hour]
+    );
+  };
+  const hourOptions = [
+    "08:00-09:00",
+    "09:00-10:00",
+    "10:00-11:00",
+    "11:00-12:00",
+    "12:00-13:00",
+    "13:00-14:00",
+    "14:00-15:00",
+    "15:00-16:00",
+    "16:00-17:00",
+    "17:00-18:00",
+  ];
 
   const monthNames = [
     "January",
@@ -108,7 +134,20 @@ export default function LeaveRequestPage() {
 
     return days;
   };
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+
+  const toggleDateSelection = (date: Date) => {
+    const exists = selectedDates.some(
+      (d) => d.toDateString() === date.toDateString()
+    );
+    if (exists) {
+      setSelectedDates(
+        selectedDates.filter((d) => d.toDateString() !== date.toDateString())
+      );
+    } else {
+      setSelectedDates([...selectedDates, date]);
+    }
+  };
 
   const navigateMonth = (direction: "prev" | "next") => {
     setCurrentDate((prev) => {
@@ -228,7 +267,7 @@ export default function LeaveRequestPage() {
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedView === "daily"
                     ? "bg-white text-gray-900 shadow-sm"
-                    : "text-blue-700"
+                    : ""
                 }`}
               >
                 <CalendarIcon className="w-4 h-4" />
@@ -255,14 +294,46 @@ export default function LeaveRequestPage() {
                     <SelectValue placeholder="Чөлөөний төрөл" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="casual">Чөлөө</SelectItem>
+                    <SelectItem value="casual">Энгийн чөлөө</SelectItem>
                     <SelectItem value="payed">Цалинтай чөлөө</SelectItem>
                     <SelectItem value="remote">Зайнаас ажиллах</SelectItem>
                     <SelectItem value="vacation">Ээлжийн амралт</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-
+              {selectedView === "hourly" ? (
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-[220px] justify-start"
+                    >
+                      {selectedHours.length > 0
+                        ? selectedHours.join(", ")
+                        : "Цаг сонгох"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[220px] p-2">
+                    <div className="grid gap-1">
+                      {hourOptions.map((hour) => (
+                        <button
+                          key={hour}
+                          onClick={() => toggleHour(hour)}
+                          className={cn(
+                            "flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100",
+                            selectedHours.includes(hour) && "bg-blue-100"
+                          )}
+                        >
+                          <span className="flex-1 text-left">{hour}</span>
+                          {selectedHours.includes(hour) && (
+                            <Check className="w-4 h-4 text-blue-500" />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              ) : null}
               <div>
                 <Select onValueChange={setManager}>
                   <SelectTrigger className="w-full">
@@ -325,25 +396,33 @@ export default function LeaveRequestPage() {
 
                 <div className="grid grid-cols-7 gap-1">
                   {days.map((day, index) => {
-                    const isSelected =
-                      selectedDate &&
-                      day.fullDate.toDateString() ===
-                        selectedDate.toDateString();
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+
+                    const isSelected = selectedDates.some(
+                      (d) => d.toDateString() === day.fullDate.toDateString()
+                    );
+                    const isPast = day.fullDate < today;
 
                     return (
                       <button
                         key={index}
                         onClick={() => {
-                          if (day.isCurrentMonth) setSelectedDate(day.fullDate);
+                          if (day.isCurrentMonth && !isPast) {
+                            toggleDateSelection(day.fullDate);
+                          }
                         }}
+                        disabled={isPast}
                         className={`p-2 text-center text-sm rounded-lg transition-colors ${
                           day.isCurrentMonth
-                            ? isSelected
+                            ? isPast
+                              ? "text-gray-400 cursor-not-allowed"
+                              : isSelected
                               ? "bg-black text-white font-semibold"
                               : day.isToday
                               ? "bg-gray-300 text-black font-medium"
                               : "text-gray-900 hover:bg-gray-100"
-                            : "text-gray-400"
+                            : "text-gray-300"
                         }`}
                       >
                         {day.day}
