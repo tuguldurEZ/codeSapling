@@ -44,15 +44,14 @@ const FirstStep = ({
   }
 
   return (
-    <div className="w-[364px] h-[364px] bg-white flex flex-col justify-between items-center rounded-[10px] shadow-2xl">
-      <p className="text-black text-xl font-bold mt-6">Нэвтрэх</p>
+    <div className="w-[364px] bg-white flex flex-col justify-between items-center rounded-[10px] shadow-2xl">
+      <p className="text-black text-xl font-bold my-6">Нэвтрэх</p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full px-5"
         >
           <div className=" space-y-6">
-            <Image src={"versel.svg"} width={100} height={100} alt="123" />
             <FormField
               control={form.control}
               name="email"
