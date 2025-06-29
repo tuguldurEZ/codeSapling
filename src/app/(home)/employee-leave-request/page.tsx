@@ -35,6 +35,7 @@ import {
   useCreateLeaveRequestMutation,
 } from "../../../../generated/client-types";
 import { toast } from "sonner";
+import { useLeaveRequest } from "@/app/_context/leaveRequestContext";
 
 export default function LeaveRequestPage() {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 5, 1)); // June 2025
@@ -48,6 +49,7 @@ export default function LeaveRequestPage() {
   const [open, setOpen] = useState(false);
   const { users } = useEmployee();
   const { currentUser } = useEmployee();
+  const { refetch } = useLeaveRequest();
 
   const [createLeaveRequest] = useCreateLeaveRequestMutation({
     onCompleted: () => {
@@ -94,6 +96,7 @@ export default function LeaveRequestPage() {
         },
       },
     });
+    refetch();
   };
 
   const toggleHour = (hour: string) => {
@@ -395,7 +398,6 @@ export default function LeaveRequestPage() {
             </div>
           </div>
 
-          {/* Calendar */}
           <div className="lg:col-span-2">
             <Card className="border border-gray-200 rounded-2xl">
               <CardContent className="p-6">

@@ -23,6 +23,11 @@ const EmployeesPage = () => {
 
     return fullName.includes(searchTerm.toLowerCase());
   });
+
+  const editHandler = () => {
+    
+  };
+  const deleteHandler = () => {};
   return (
     <div className="py-5 px-6 w-[78vw] m-auto flex mt-5 flex-col gap-5 bg-[#fffaf0] h-[95vh] rounded-lg overflow-auto">
       <div className="flex justify-between items-center w-full">
@@ -102,10 +107,16 @@ const EmployeesPage = () => {
                 </span>
               </td>
               <td className="flex gap-2 ml-7">
-                <Button className="bg-white border-red-100 border-[1px] text-red-400 font-semibold hover:bg-red-100">
+                <Button
+                  onClick={editHandler}
+                  className="bg-white border-red-100 border-[1px] text-red-400 font-semibold hover:bg-red-100"
+                >
                   Засах
                 </Button>
-                <Button className="bg-white text-black border-[1px]  hover:bg-gray-100">
+                <Button
+                  onClick={deleteHandler}
+                  className="bg-white text-black border-[1px]  hover:bg-gray-100"
+                >
                   Устгах
                 </Button>
               </td>

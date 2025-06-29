@@ -19,6 +19,15 @@ import {
   useUpdateLeaveStatusMutation,
 } from "../../../../../generated/client-types";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 type RequestStatus = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -31,6 +40,7 @@ interface LeaveRequest {
   title: string;
   submittedAt: string;
   status: RequestStatus;
+  createdAt: number;
 }
 
 const statusConfig: Record<
@@ -57,7 +67,13 @@ const statusConfig: Record<
 export default function LeaveRequest() {
   const { leaveRequests } = useLeaveRequest();
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState<string | null>(
+    null
+  );
+  const [selectedAction, setSelectedAction] = useState<RequestStatus | null>(
+    null
+  );
   const [activeFilter, setActiveFilter] = useState<"all" | RequestStatus>(
     "all"
   );
@@ -74,8 +90,8 @@ export default function LeaveRequest() {
     annualLeave: "Ээлжийн амралт",
   };
 
-  const convertedLeaveRequests: LeaveRequest[] = leaveRequests.map(
-    (req: any) => {
+  const convertedLeaveRequests: LeaveRequest[] = leaveRequests
+    .map((req: any) => {
       const start = new Date(Number(req.startDate));
       const end = new Date(Number(req.endDate));
       const dateRange = `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
@@ -99,21 +115,10 @@ export default function LeaveRequest() {
         title: req.reason ?? "Тайлбаргүй",
         submittedAt: new Date(Number(req.createdAt)).toLocaleDateString(),
         status: req.status as RequestStatus,
+        createdAt: Number(req.createdAt),
       };
-    }
-  );
-
-  const handleStatusChange = async (
-    requestId: string,
-    newStatus: RequestStatus
-  ) => {
-    await updateLeaveStatus({
-      variables: {
-        updateLeaveStatusId: requestId,
-        status: newStatus as LeaveStatus,
-      },
-    });
-  };
+    })
+    .sort((a, b) => b.createdAt - a.createdAt);
 
   const filters = [
     { key: "all", label: "Бүгд" },
@@ -243,19 +248,24 @@ export default function LeaveRequest() {
                         <Button
                           size="sm"
                           className="bg-green-600 text-white hover:bg-green-700"
-                          onClick={() =>
-                            handleStatusChange(request.id, "APPROVED")
-                          }
+                          onClick={() => {
+                            setSelectedRequestId(request.id);
+                            setSelectedAction("APPROVED");
+                            setDialogOpen(true);
+                          }}
                         >
                           <CheckCircle className="h-4 w-4 mr-1" />
                           Зөвшөөрөх
                         </Button>
+
                         <Button
                           size="sm"
                           variant="destructive"
-                          onClick={() =>
-                            handleStatusChange(request.id, "REJECTED")
-                          }
+                          onClick={() => {
+                            setSelectedRequestId(request.id);
+                            setSelectedAction("REJECTED");
+                            setDialogOpen(true);
+                          }}
                         >
                           <XCircle className="h-4 w-4 mr-1" />
                           Татгалзах
@@ -274,6 +284,53 @@ export default function LeaveRequest() {
           })}
         </div>
       </div>
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {selectedAction === "APPROVED"
+                ? "Та зөвшөөрөхдөө итгэлтэй байна уу?"
+                : "Та татгалзахаасаа өмнө шалгана уу?"}
+            </DialogTitle>
+            <DialogDescription>
+              Энэ үйлдлийг буцаах боломжгүй. Сайтар шалгана уу.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setDialogOpen(false)}>
+              Үгүй
+            </Button>
+            <Button
+              onClick={async () => {
+                if (!selectedRequestId || !selectedAction) return;
+                try {
+                  await updateLeaveStatus({
+                    variables: {
+                      updateLeaveStatusId: selectedRequestId,
+                      status: selectedAction as LeaveStatus,
+                    },
+                  });
+                  toast.success(
+                    selectedAction === "APPROVED"
+                      ? "Амжилттай зөвшөөрлөө"
+                      : "Амжилттай татгалзлаа"
+                  );
+                } catch (error) {
+                  toast.error("Алдаа гарлаа");
+                  console.error(error);
+                } finally {
+                  setDialogOpen(false);
+                  setSelectedAction(null);
+                  setSelectedRequestId(null);
+                }
+              }}
+            >
+              Тийм
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

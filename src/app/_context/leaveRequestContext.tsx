@@ -15,6 +15,7 @@ import {
 type LeaveRequestContextType = {
   leaveRequests: LeaveRequest[] | null;
   isLoading: boolean;
+  refetch: () => void;
 };
 
 const LeaveRequestContext = createContext<LeaveRequestContextType | undefined>(
@@ -32,7 +33,7 @@ export const useLeaveRequest = () => {
 };
 
 const LeaveRequestProvider = ({ children }: { children: ReactNode }) => {
-  const { data, loading } = useGetLeaveRequestsQuery();
+  const { data, loading,refetch } = useGetLeaveRequestsQuery();
 
   const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[] | null>(
     null
@@ -49,6 +50,7 @@ const LeaveRequestProvider = ({ children }: { children: ReactNode }) => {
       value={{
         leaveRequests,
         isLoading: loading,
+        refetch
       }}
     >
       {children}
