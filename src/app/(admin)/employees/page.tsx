@@ -5,6 +5,8 @@ import { useGetUsersQuery } from "../../../../generated/client-types";
 import { CalendarIcon } from "lucide-react";
 import EmployeeDialog from "./_components/employeeDialog";
 
+import { Button } from "@/components/ui/button";
+
 const EmployeesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -22,7 +24,7 @@ const EmployeesPage = () => {
     return fullName.includes(searchTerm.toLowerCase());
   });
   return (
-    <div className="py-5 px-6 w-[78vw] m-auto flex mt-5 flex-col gap-5 bg-white h-[95vh] rounded-lg overflow-auto">
+    <div className="py-5 px-6 w-[78vw] m-auto flex mt-5 flex-col gap-5 bg-[#fffaf0] h-[95vh] rounded-lg overflow-auto">
       <div className="flex justify-between items-center w-full">
         <p className="font-semibold text-xl ">Ажилтнуудын удирдлага</p>
         <div className="flex items-center gap-6">
@@ -38,13 +40,14 @@ const EmployeesPage = () => {
         </div>
       </div>
 
-      <table className="min-w-full table-auto border-separate border-spacing-y-3">
-        <thead>
+      <table className="min-w-full bg-white table-auto border-separate border-spacing-y-3">
+        <thead className="bg-[#fffcf6] h-[50px]">
           <tr className="text-left text-[#737373] text-base font-bold">
             <th className="min-w-[250px] px-4">Ажилтан</th>
             <th>Албан тушаал</th>
             <th>Ажилд орсон огноо</th>
             <th>Админ эрх</th>
+            <th className="text-center">Үйлдэл</th>
           </tr>
         </thead>
         <tbody>
@@ -85,7 +88,7 @@ const EmployeesPage = () => {
                 <span
                   className={`px-3 py-1 w-[94px] h-[32px]  rounded-full text-sm font-semibold ${
                     user?.role === "ADMIN"
-                      ? "bg-red-500 text-white px-[18px] text-base font-semibold"
+                      ? "bg-amber-100 text-amber-900 px-[18px] text-base font-semibold"
                       : user?.role === "USER"
                       ? "bg-[#DCFCE7] text-[#166434] py-[6px]  text-base font-semibold"
                       : "bg-gray-300 text-[#166434]"
@@ -97,6 +100,14 @@ const EmployeesPage = () => {
                     ? "Ажилтан"
                     : "Тодорхойгүй"}
                 </span>
+              </td>
+              <td className="flex gap-2 ml-7">
+                <Button className="bg-white border-red-100 border-[1px] text-red-400 font-semibold hover:bg-red-100">
+                  Засах
+                </Button>
+                <Button className="bg-white text-black border-[1px]  hover:bg-gray-100">
+                  Устгах
+                </Button>
               </td>
             </tr>
           ))}

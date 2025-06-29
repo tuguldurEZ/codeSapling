@@ -115,7 +115,7 @@ const RecentRequests = () => {
           <p className="text-[30px] font-bold">{users?.length}</p>
         </div>
         {Object.entries(roleCounts || {})
-          .slice(0, 3)
+          .slice(0, 4)
           .map(([role, count]) => (
             <div
               key={role}
@@ -125,7 +125,7 @@ const RecentRequests = () => {
               <p className="text-[30px] font-bold">{count}</p>
             </div>
           ))}
-        <button className="text-end text-[#717171] text-[14px]">
+        <button className="text-end text-[#717171] mt-3 text-[14px]">
           Дэлгэрэнгүй
         </button>
       </div>

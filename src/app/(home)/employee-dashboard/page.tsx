@@ -93,7 +93,11 @@ export default function EmployeeDashboard() {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-center gap-2">
-                  <CalendarDays className="h-5 w-5" stroke="#525252" />
+                  <CalendarDays
+                    className="h-5 w-5 bg-amber-400"
+                    fill="#171717"
+                    stroke="#525252"
+                  />
                   <CardTitle className="text-base font-medium">
                     Цалинтай ажилласан
                   </CardTitle>

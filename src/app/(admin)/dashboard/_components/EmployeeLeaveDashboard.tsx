@@ -81,7 +81,7 @@ export default function EmployeeLeaveDashboard() {
               >
                 <div className="flex items-center space-x-3">
                   <Avatar className="h-10 w-10 flex items-center justify-center bg-blue-100">
-                    <div className=" rounded-full bg-blue-100  text-blue-600 font-medium ">
+                    <div className=" w-12 h-12  border-1 border-beige-300 bg-gradient-to-br flex justify-center items-center rounded-full from-beige-400 to-orange-500 text-white font-medium">
                       {employee.initials}
                     </div>
                   </Avatar>
@@ -133,7 +133,7 @@ export default function EmployeeLeaveDashboard() {
               >
                 <div className="flex items-center space-x-3">
                   <Avatar className="h-10 w-10 flex items-center justify-center bg-blue-100">
-                    <div className="rounded-full bg-blue-100  text-blue-600 font-medium">
+                    <div className="w-12 h-12  border-1 border-beige-300 bg-gradient-to-br flex justify-center items-center rounded-full from-beige-400 to-orange-500 text-white font-medium">
                       {employee.initials}
                     </div>
                   </Avatar>

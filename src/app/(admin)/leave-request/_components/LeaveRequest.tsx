@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
-  Search,
   Plus,
   Calendar,
   Clock,
@@ -19,6 +18,7 @@ import {
   LeaveStatus,
   useUpdateLeaveStatusMutation,
 } from "../../../../../generated/client-types";
+import { Input } from "@/components/ui/input";
 
 type RequestStatus = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -56,9 +56,12 @@ const statusConfig: Record<
 
 export default function LeaveRequest() {
   const { leaveRequests } = useLeaveRequest();
+  const [searchQuery, setSearchQuery] = useState("");
+
   const [activeFilter, setActiveFilter] = useState<"all" | RequestStatus>(
     "all"
   );
+
   const [updateLeaveStatus] = useUpdateLeaveStatusMutation();
   if (!leaveRequests) {
     return;
@@ -100,22 +103,6 @@ export default function LeaveRequest() {
     }
   );
 
-  const filteredRequests = (() => {
-    const filtered = convertedLeaveRequests.filter(
-      (request) => activeFilter === "all" || request.status === activeFilter
-    );
-
-    if (activeFilter === "all") {
-      return filtered.sort((a, b) => {
-        if (a.status === "PENDING" && b.status !== "PENDING") return -1;
-        if (a.status !== "PENDING" && b.status === "PENDING") return 1;
-        return 0;
-      });
-    }
-
-    return filtered;
-  })();
-
   const handleStatusChange = async (
     requestId: string,
     newStatus: RequestStatus
@@ -134,6 +121,29 @@ export default function LeaveRequest() {
     { key: "APPROVED", label: "Зөвшөөрсөн" },
     { key: "REJECTED", label: "Татгалзсан" },
   ];
+  const filteredRequestsEmployees = (() => {
+    let filtered = convertedLeaveRequests;
+
+    if (activeFilter !== "all") {
+      filtered = filtered.filter((request) => request.status === activeFilter);
+    }
+
+    if (searchQuery.trim() !== "") {
+      filtered = filtered.filter((request) =>
+        request.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    if (activeFilter === "all") {
+      filtered = filtered.sort((a, b) => {
+        if (a.status === "PENDING" && b.status !== "PENDING") return -1;
+        if (a.status !== "PENDING" && b.status === "PENDING") return 1;
+        return 0;
+      });
+    }
+
+    return filtered;
+  })();
 
   return (
     <div className="w-full bg-gray-50 p-6">
@@ -143,14 +153,14 @@ export default function LeaveRequest() {
             Чөлөөний хүсэлтүүд
           </h1>
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="icon"
-              className="bg-black text-white hover:bg-gray-800"
-            >
-              <Search className="h-4 w-4" />
-            </Button>
-            <Button className="bg-black text-white hover:bg-gray-800">
+            <Input
+              placeholder="ажилтан хайх..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="focus:border-orange-500 focus:ring-orange-500 border-amber-600 border-[1px]"
+            />
+
+            <Button className="bg-gradient-to-r from-orange-300 to-orange-500 hover:from-beige-500 hover:to-orange-600 text-white border-0">
               <Plus className="h-4 w-4 mr-2" />
               Чөлөөний хүсэлт
             </Button>
@@ -164,7 +174,7 @@ export default function LeaveRequest() {
               variant={activeFilter === filter.key ? "default" : "ghost"}
               className={`rounded-full px-4 py-2 ${
                 activeFilter === filter.key
-                  ? "bg-black text-white hover:bg-gray-800"
+                  ? "bg-gradient-to-r from-orange-300 to-orange-500 hover:from-beige-500 hover:to-orange-600 text-white border-0"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               }`}
               onClick={() =>
@@ -177,7 +187,7 @@ export default function LeaveRequest() {
         </div>
 
         <div className="w-full space-y-4">
-          {filteredRequests.map((request) => {
+          {filteredRequestsEmployees.map((request) => {
             const StatusIcon = statusConfig[request.status].icon;
 
             return (
@@ -188,7 +198,7 @@ export default function LeaveRequest() {
                 <div className="w-full flex items-start justify-between">
                   <div className="w-full flex items-start gap-4">
                     <Avatar className="w-12 h-12 bg-blue-100">
-                      <AvatarFallback className="text-blue-600 font-medium">
+                      <AvatarFallback className="border-1 border-beige-300 bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
                         {request.name?.charAt(0)}
                       </AvatarFallback>
                     </Avatar>

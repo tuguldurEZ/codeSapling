@@ -60,8 +60,8 @@ function SectionHeader({
 
 const EmployeeCard = ({ employee }: { employee: Employee }) => (
   <div className="text-start w-[300px] p-4 rounded-lg border-gray-100 border-[1px] bg-white">
-    <div className="flex">
-      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium mr-2 mb-2">
+    <div className="flex gap-2">
+      <div className="w-12 h-12  border-1 border-beige-300 bg-gradient-to-br flex justify-center items-center rounded-full from-beige-400 to-orange-500 text-white font-medium">
         {employee.avatar}
       </div>
       <div>
@@ -101,7 +101,7 @@ const EmployeeSection = ({ title, icon, employees }: EmployeeSectionProps) => (
       <div className="flex justify-end">
         <Button
           variant="ghost"
-          className="text-gray-600 text-sm font-normal hover:text-blue-700"
+          className="text-gray-600 text-sm font-normal hover:text-amber-600"
         >
           Цааш нь
         </Button>
