@@ -1,10 +1,11 @@
 "use client";
 import React, { ReactNode, useEffect } from "react";
-import Header from "@/components/Header";
+
 import Sidebar from "./_components/Sidebar";
 import { useEmployee } from "../_context/employeeContext";
 import { useRouter } from "next/navigation";
 import { Loading } from "@/components/Loading";
+import Header from "./_components/Header";
 
 type Props = {
   children: ReactNode;

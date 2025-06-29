@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="w-[288px] py-5 px-[20px] flex flex-col  gap-10 bg-[#ffffff]">
+    <div className="w-[20vw] py-5 px-[20px] flex flex-col  gap-10 bg-[#ffffff]">
       <ToggleGroup type="single" className="flex flex-col items-start gap-4">
         <Link href="dashboard">
           <ToggleGroupItem
