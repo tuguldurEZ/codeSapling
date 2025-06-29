@@ -3,7 +3,7 @@ import { useLeaveRequest } from "@/app/_context/leaveRequestContext";
 import {
   CalendarDays,
   ChartLine,
-  Clock,
+  MonitorUp,
   ShieldAlert,
   User,
 } from "lucide-react";
@@ -39,30 +39,40 @@ const StatusDashboard = () => {
   return (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className=" border-1 shadow-1xl rounded-2xl bg-white hover:border-t-neutral-400 p-4">
-          <CalendarDays className="bg-" />
-          <p className="text-2xl font-bold">{totalCasualLeave} удаа</p>
-          <p className="text-[14px] text-gray-600">Энэ сарын нийт чөлөө</p>
+        <div className=" border-1 shadow-1xl flex justify-between items-center rounded-2xl bg-white hover:border-t-neutral-400 p-4">
+          <div>
+            <p className="text-2xl font-bold">{totalCasualLeave} удаа</p>
+            <p className="text-[14px] text-gray-600">Энэ сарын нийт чөлөө</p>
+          </div>
+          <CalendarDays className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-800" />
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-1xl border hover:border-t-neutral-400">
-          <ChartLine />
-          <p className="text-2xl font-bold">{totalPaidLeave} удаа</p>
-          <p className="text-[14px] text-gray-600">Энэ жилийн цалинтай чөлөө</p>
+        <div className="bg-white flex justify-between items-center p-4 rounded-lg shadow-1xl border hover:border-t-neutral-400">
+          <div>
+            <p className="text-2xl font-bold">{totalPaidLeave} удаа</p>
+            <p className="text-[14px] text-gray-600">
+              Энэ жилийн цалинтай чөлөө
+            </p>
+          </div>{" "}
+          <ChartLine className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-900" />
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-1xl border hover:border-t-neutral-400">
-          <Clock />
-          <p className="text-2xl font-bold">{totalRemoteWork} удаа</p>
-          <p className="text-[14px] text-gray-600">
-            Энэ сарын зайнаас ажилласан
-          </p>
+        <div className="bg-white flex justify-between items-center p-4 rounded-lg shadow-1xl border hover:border-t-neutral-400">
+          <div>
+            <p className="text-2xl font-bold">{totalRemoteWork} удаа</p>
+            <p className="text-[14px] text-gray-600">
+              Энэ сарын зайнаас ажилласан
+            </p>
+          </div>
+          <MonitorUp className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-800" />
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-1xl border hover:border-t-neutral-400">
-          <User />
-          <p className="text-2xl font-bold">{totalAnnualLeave} хүн</p>
-          <p className="text-[14px] text-gray-600">Ээлжийн амралт</p>
+        <div className="bg-white flex justify-between items-center p-4 rounded-lg shadow-1xl border hover:border-t-neutral-400">
+          <div>
+            <p className="text-2xl font-bold">{totalAnnualLeave} хүн</p>
+            <p className="text-[14px] text-gray-600">Ээлжийн амралт</p>
+          </div>
+          <User className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-800" />
         </div>
       </div>
 

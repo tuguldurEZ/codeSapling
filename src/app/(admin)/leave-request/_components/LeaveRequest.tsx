@@ -151,7 +151,7 @@ export default function LeaveRequest() {
   })();
 
   return (
-    <div className="w-full bg-gray-50 p-6">
+    <div className="w-full bg-gray-100 min-h-screen p-6">
       <div className="w-full max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-semibold text-gray-900">
@@ -159,10 +159,10 @@ export default function LeaveRequest() {
           </h1>
           <div className="flex items-center gap-4">
             <Input
-              placeholder="ажилтан хайх..."
+              placeholder="Ажилтан хайх..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="focus:border-orange-500 focus:ring-orange-500 border-amber-600 border-[1px]"
+              className="border border-amber-600 focus:outline-none focus:ring-1 focus:!ring-amber-500 focus:!border-amber-500 focus:!border-[1px] transition-all duration-200"
             />
 
             <Button className="bg-gradient-to-r from-orange-300 to-orange-500 hover:from-beige-500 hover:to-orange-600 text-white border-0">

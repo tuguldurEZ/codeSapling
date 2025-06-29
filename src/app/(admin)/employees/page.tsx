@@ -29,7 +29,7 @@ const EmployeesPage = () => {
   };
   const deleteHandler = () => {};
   return (
-    <div className="py-5 px-6 w-[78vw] m-auto flex mt-5 flex-col gap-5 bg-[#fffaf0] h-[95vh] rounded-lg overflow-auto">
+    <div className="py-5 px-6 w-[80vw]  flex flex-col gap-5 bg-gray-100 h-[95vh] rounded-lg overflow-auto">
       <div className="flex justify-between items-center w-full">
         <p className="font-semibold text-xl ">Ажилтнуудын удирдлага</p>
         <div className="flex items-center gap-6">
@@ -46,7 +46,7 @@ const EmployeesPage = () => {
       </div>
 
       <table className="min-w-full bg-white table-auto border-separate border-spacing-y-3">
-        <thead className="bg-[#fffcf6] h-[50px]">
+        <thead className="bg-white h-[50px]">
           <tr className="text-left text-[#737373] text-base font-bold">
             <th className="min-w-[250px] px-4">Ажилтан</th>
             <th>Албан тушаал</th>
