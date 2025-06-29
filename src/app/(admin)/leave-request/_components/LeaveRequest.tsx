@@ -61,7 +61,7 @@ export default function LeaveRequest() {
   );
   const [updateLeaveStatus] = useUpdateLeaveStatusMutation();
   if (!leaveRequests) {
-    return <div>Түр хүлээнэ үү...</div>;
+    return;
   }
 
   const leaveTypeLabels: Record<string, string> = {

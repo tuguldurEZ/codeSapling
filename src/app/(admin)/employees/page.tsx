@@ -10,7 +10,7 @@ const EmployeesPage = () => {
 
   const { data, loading, error, refetch } = useGetUsersQuery();
 
-  if (loading) return <p className="px-6 py-4">Уншиж байна...</p>;
+  if (loading) return;
   if (error)
     return <p className="px-6 py-4 text-red-500">Алдаа: {error.message}</p>;
 

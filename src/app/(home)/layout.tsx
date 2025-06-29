@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Sidebar from "./_components/Sidebar";
 import { useEmployee } from "../_context/employeeContext";
 import { useRouter } from "next/navigation";
+import { Loading } from "@/components/Loading";
 
 type Props = {
   children: ReactNode;
@@ -21,8 +22,8 @@ const AuthLayout = ({ children }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        <p>Түр хүлээнэ үү...</p>
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loading />
       </div>
     );
   }
