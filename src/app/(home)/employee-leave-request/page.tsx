@@ -28,6 +28,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { useEmployee } from "@/app/_context/employeeContext";
+import { Loading } from "@/components/Loading";
+import {
+  LeaveType,
+  useCreateLeaveRequestMutation,
+} from "../../../../generated/client-types";
+import { toast } from "sonner";
 
 export default function LeaveRequestPage() {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 5, 1)); // June 2025
@@ -36,21 +43,59 @@ export default function LeaveRequestPage() {
   const [manager, setManager] = useState<string>("");
   const [note, setNote] = useState<string>("");
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
   const [open, setOpen] = useState(false);
+  const { users } = useEmployee();
+  const { currentUser } = useEmployee();
 
-  const handleSubmit = () => {
-    const selectedInfo = {
-      reason,
-      manager,
-      note,
-      selectedDate: selectedDates
-        ? selectedDates.map((date) => date.toISOString().split("T")[0])
-        : null,
-      selectedEmployees: selectedEmployees.map((index) => employees[index]),
-    };
-    console.log("Selected Info:", selectedInfo);
-    alert(JSON.stringify(selectedInfo, null, 2));
+  const [createLeaveRequest] = useCreateLeaveRequestMutation({
+    onCompleted: () => {
+      toast.success("Амралтын хүсэлт амжилттай илгээгдлээ!");
+    },
+    onError: (error) => {
+      toast.error(`Алдаа гарлаа: ${error.message}`);
+    },
+  });
+
+  if (!users) {
+    return <Loading />;
+  }
+
+  const admins = users?.filter((user) => user.role === "ADMIN");
+
+  const handleSubmit = async () => {
+    if (selectedDates.length === 0) {
+      alert("Та дор хаяж нэг өдөр сонгоно уу.");
+      return;
+    }
+
+    const sortedDates = [...selectedDates].sort(
+      (a, b) => a.getTime() - b.getTime()
+    );
+
+    const startDate = sortedDates[0].toISOString();
+    const endDate = sortedDates[sortedDates.length - 1].toISOString();
+    if (!currentUser?._id || !reason || !manager) {
+      alert("Бүх талбарыг бөглөнө үү");
+      return;
+    }
+
+    await createLeaveRequest({
+      variables: {
+        input: {
+          userId: currentUser._id,
+          reason: note,
+          LeaveType: reason as LeaveType,
+          approver: manager,
+          notifyTo: selectedEmployees.map((i) => users[i]._id),
+          startDate,
+          endDate,
+        },
+      },
+    });
   };
+
   const toggleHour = (hour: string) => {
     setSelectedHours((prev) =>
       prev.includes(hour) ? prev.filter((h) => h !== hour) : [...prev, hour]
@@ -94,7 +139,6 @@ export default function LeaveRequestPage() {
 
     const days = [];
 
-    // Previous month days
     const prevMonthLastDate = new Date(year, month, 0).getDate();
     for (let i = startingDayOfWeek - 1; i >= 0; i--) {
       const dayNum = prevMonthLastDate - i;
@@ -107,7 +151,6 @@ export default function LeaveRequestPage() {
       });
     }
 
-    // Current month days
     const today = new Date();
     for (let day = 1; day <= daysInMonth; day++) {
       const fullDate = new Date(year, month, day);
@@ -120,7 +163,6 @@ export default function LeaveRequestPage() {
       });
     }
 
-    // Next month days
     const remainingDays = 42 - days.length;
     for (let day = 1; day <= remainingDays; day++) {
       const fullDate = new Date(year, month + 1, day);
@@ -134,7 +176,6 @@ export default function LeaveRequestPage() {
 
     return days;
   };
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
 
   const toggleDateSelection = (date: Date) => {
     const exists = selectedDates.some(
@@ -163,14 +204,11 @@ export default function LeaveRequestPage() {
 
   const days = getDaysInMonth(currentDate);
 
-  const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
   const handleSelectAll = () => {
-    if (selectedEmployees.length === employees.length) {
-      // If all are selected, deselect all
+    if (selectedEmployees.length === users?.length) {
       setSelectedEmployees([]);
     } else {
-      // Select all employees
-      setSelectedEmployees(employees.map((_, index) => index));
+      setSelectedEmployees(users?.map((_, index) => index));
     }
   };
   const handleEmployeeToggle = (index: number) => {
@@ -178,20 +216,14 @@ export default function LeaveRequestPage() {
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-  const employees = [
-    { name: "Батбаяр", email: "batbayr@company.mn" },
-    { name: "Батбаяр", email: "batbayr@company.mn" },
-    { name: "Батбаяр", email: "batbayr@company.mn" },
-    { name: "Батбаяр", email: "batbayr@company.mn" },
-  ];
-  const isAllSelected = selectedEmployees.length === employees.length;
+
+  const isAllSelected = selectedEmployees.length === users?.length;
   const isIndeterminate =
-    selectedEmployees.length > 0 && selectedEmployees.length < employees.length;
+    selectedEmployees.length > 0 && selectedEmployees.length < users.length;
 
   return (
     <div className="min-h-screen  bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="border border-gray-200 rounded-2xl">
             <CardContent className="p-6">
@@ -294,10 +326,10 @@ export default function LeaveRequestPage() {
                     <SelectValue placeholder="Чөлөөний төрөл" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="casual">Энгийн чөлөө</SelectItem>
-                    <SelectItem value="payed">Цалинтай чөлөө</SelectItem>
-                    <SelectItem value="remote">Зайнаас ажиллах</SelectItem>
-                    <SelectItem value="vacation">Ээлжийн амралт</SelectItem>
+                    <SelectItem value="casualLeave">Энгийн чөлөө</SelectItem>
+                    <SelectItem value="paidLeave">Цалинтай чөлөө</SelectItem>
+                    <SelectItem value="remoteWork">Зайнаас ажиллах</SelectItem>
+                    <SelectItem value="annualLeave">Ээлжийн амралт</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -340,8 +372,11 @@ export default function LeaveRequestPage() {
                     <SelectValue placeholder="Удирдах албан тушаалтан" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="manager1">Менежер 1</SelectItem>
-                    <SelectItem value="manager2">Менежер 2</SelectItem>
+                    {admins?.map((admin) => (
+                      <SelectItem key={admin._id} value={admin._id}>
+                        {admin.lastName[0]}.{admin.firstName}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -459,7 +494,7 @@ export default function LeaveRequestPage() {
                   </label>
                 </div>
                 <div className="space-y-3">
-                  {employees.map((employee, index) => (
+                  {users?.slice(0, 3).map((employee, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <Checkbox
                         id={`employee-${index}`}
@@ -473,7 +508,7 @@ export default function LeaveRequestPage() {
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium text-gray-900">
-                          {employee.name}
+                          {employee.firstName}
                         </div>
                         <div className="text-xs text-gray-500 truncate">
                           {employee.email}

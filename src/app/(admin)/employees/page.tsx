@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useGetUsersQuery } from "../../../../generated/client-types";
 import { CalendarIcon } from "lucide-react";
 import EmployeeDialog from "./_components/employeeDialog";
-import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 
 const EmployeesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
