@@ -34,6 +34,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useState } from "react";
 import { useCreateEmployeeMutation } from "../../../../../generated/client-types";
+import { Plus } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -101,11 +102,9 @@ export default function EmployeeDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="bg-black text-white hover:bg-black hover:text-white cursor-pointer"
-        >
-          + Ажилтан нэмэх
+        <Button className="bg-gradient-to-r from-orange-300 to-orange-500 hover:from-beige-500 hover:to-orange-600 text-white border-0">
+          <Plus className="w-4 h-4 mr-2" />
+          Ажилтан нэмэх
         </Button>
       </DialogTrigger>
       <DialogContent className="w-[589px] h-auto flex-col p-8">

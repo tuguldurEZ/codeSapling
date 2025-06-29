@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useGetUsersQuery } from "../../../../generated/client-types";
 import { CalendarIcon } from "lucide-react";
 import EmployeeDialog from "./_components/employeeDialog";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 
 const EmployeesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,9 +52,10 @@ const EmployeesPage = () => {
           {filteredUsers.map((user, index) => (
             <tr key={user._id || index} className=" rounded-md">
               <td className="flex items-center gap-3 px-4 py-2">
-                <div className="w-11 h-11 flex justify-center items-center rounded-full bg-[#DBE9FE] text-sm font-bold">
+                <div className="border-1 border-beige-300 bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
                   {user?.firstName?.[0] || "A"}
                 </div>
+
                 <div>
                   <p className="font-semibold text-base">
                     {user.firstName} {user.lastName}

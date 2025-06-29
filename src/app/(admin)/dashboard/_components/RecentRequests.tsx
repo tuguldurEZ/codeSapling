@@ -61,8 +61,8 @@ const RecentRequests = () => {
   }, {});
 
   return (
-    <div className="flex gap-5 p-4">
-      <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-[500px]">
+    <div className="flex w-full gap-5 p-4">
+      <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-full">
         <p className="font-bold text-[20px]">Сүүлийн хүсэлтүүд</p>
 
         {leaveRequests.slice(0, 3).map((leave, index) => {
@@ -74,9 +74,12 @@ const RecentRequests = () => {
           const hours = calculateHours(leave.startDate, leave.endDate);
 
           return (
-            <div key={leave.id || index} className=" w-full">
+            <div
+              key={leave.id || index}
+              className="flex items-center gap-4 p-3 rounded-lg bg-gradient-to-r from-beige-50 to-orange-50 hover:from-beige-100 hover:to-orange-100 transition-colors"
+            >
               <div className="w-full p-2 flex gap-3 items-center mb-2">
-                <div className="py-2 font-bold px-4 w-11 h-11 flex justify-center items-center rounded-full bg-[#DBE9FE] text-sm">
+                <div className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
                   {user?.firstName?.[0] || "A"}
                 </div>
                 <div className="w-full flex justify-between items-center">
@@ -101,11 +104,11 @@ const RecentRequests = () => {
         </button>
       </div>
 
-      <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-[500px]">
-        <p className="font-bold text-[20px]">Ажилчдын тойм</p>
+      <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-full">
+        <p className="font-bold text-[20px] ">Ажилчдын тойм</p>
 
-        <div className="flex rounded-[4px] bg-[#FAFAFA] p-2 items-center justify-between w-full">
-          <div>
+        <div className="flex rounded-[4px] bg-gradient-to-r from-beige-50 to-orange-50 hover:from-beige-100 hover:to-orange-100 transition-colors p-3 items-center justify-between w-full">
+          <div className="">
             <p className="text-[20px] font-bold">Идэвхитэй</p>
             <p className="text-[#737373]">Нийт ажилтан</p>
           </div>
@@ -116,7 +119,7 @@ const RecentRequests = () => {
           .map(([role, count]) => (
             <div
               key={role}
-              className="flex rounded-[4px] h-[40px] bg-[#FAFAFA] p-2 items-center justify-between w-full"
+              className="flex  h-[40px] rounded-lg bg-gradient-to-r from-beige-50 to-orange-50 hover:from-beige-100 hover:to-orange-100 transition-colors p-3 items-center justify-between w-full"
             >
               <p className="text-[#404040] font-medium">{role}</p>
               <p className="text-[30px] font-bold">{count}</p>

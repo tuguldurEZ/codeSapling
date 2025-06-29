@@ -33,7 +33,7 @@ const AuthLayout = ({ children }: Props) => {
   }
 
   return (
-    <div className="bg-[#F9FAFB]">
+    <div className="bg-[#fefdfb]">
       <Header />
       <div className="flex">
         <Sidebar />

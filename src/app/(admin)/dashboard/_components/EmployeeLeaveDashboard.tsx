@@ -53,7 +53,7 @@ export default function EmployeeLeaveDashboard() {
   ];
 
   return (
-    <div className="p-6 bg-gray-50 ">
+    <div className="p-6  ">
       <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
         {/* Leave Taken Section */}
         <Card className="bg-white">

@@ -113,9 +113,7 @@ const EmployeeSection = ({ title, icon, employees }: EmployeeSectionProps) => (
 const LeaveRequestHistory = () => {
   return (
     <div className="flex flex-col gap-5">
-      <div className="">
-        <EmployeeLeaveDashboard />
-      </div>
+      <EmployeeLeaveDashboard />
 
       <EmployeeSection
         icon={Clock}

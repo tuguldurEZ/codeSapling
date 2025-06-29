@@ -39,7 +39,7 @@ const StatusDashboard = () => {
   return (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="w-[235px] h-[120px] border-1 shadow-1xl rounded-2xl bg-white hover:border-t-neutral-400 p-4">
+        <div className=" border-1 shadow-1xl rounded-2xl bg-white hover:border-t-neutral-400 p-4">
           <CalendarDays />
           <p className="text-2xl font-bold">{totalCasualLeave} удаа</p>
           <p className="text-[14px] text-gray-600">Энэ сарын нийт чөлөө</p>

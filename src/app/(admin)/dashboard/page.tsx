@@ -5,7 +5,7 @@ import LeaveRequestHistory from "./_components/LeaveRequestHistory";
 
 const DashboardPage = () => {
   return (
-    <div>
+    <div className="w-full bg-[#fefdfb]">
       <StatusDashboard />
       <RecentRequests />
       <LeaveRequestHistory />
