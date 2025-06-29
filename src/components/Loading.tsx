@@ -3,10 +3,12 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export const Loading = () => {
   return (
-    <DotLottieReact
-      src="https://lottie.host/06b7f0ce-babb-416c-9ee1-b0cd1fd6258c/vIWbpwiTFI.lottie"
-      loop
-      autoplay
-    />
+    <div className="w-52 h-48">
+      <DotLottieReact
+        src="https://lottie.host/7629a305-e31c-47b9-ab06-f709e5ee68c5/Qrj4uV3Lfj.lottie"
+        loop
+        autoplay
+      />
+    </div>
   );
 };

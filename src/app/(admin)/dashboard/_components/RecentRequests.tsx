@@ -23,7 +23,7 @@ const RecentRequests = () => {
   const { leaveRequests, isLoading } = useLeaveRequest();
   const { users } = useEmployee();
 
-  if (isLoading) return <p className="px-6 py-4">Уншиж байна...</p>;
+  if (isLoading) return;
   if (!leaveRequests?.length) return <p className="px-6 py-4">Хүсэлт алга</p>;
 
   const getStatusBadge = (status: string) => {
@@ -65,7 +65,7 @@ const RecentRequests = () => {
       <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-[500px]">
         <p className="font-bold text-[20px]">Сүүлийн хүсэлтүүд</p>
 
-        {leaveRequests.slice(0,3).map((leave, index) => {
+        {leaveRequests.slice(0, 3).map((leave, index) => {
           const user = leave.userId;
           if (!user) return null;
 
