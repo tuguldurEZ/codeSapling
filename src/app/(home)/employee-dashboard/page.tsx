@@ -255,7 +255,7 @@ export default function EmployeeDashboard() {
                 ))}
 
                 <Link href="employee-leave-request">
-                  <Button className="bg-black cursor-pointer text-white hover:bg-gray-800">
+                  <Button className="bg-gradient-to-br py-2 px-4 mt-4 rounded-full from-orange-300 to-orange-500 text-white font-medium">
                     <Send className="w-4 h-4 mr-2" />
                     Чөлөө хүсэх
                   </Button>
