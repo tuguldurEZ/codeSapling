@@ -68,7 +68,7 @@ export default function EmployeeDashboard() {
               <CardHeader>
                 <div className="flex items-center justify-center gap-2">
                   <CalendarDays
-                    className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-800"
+                    className="rounded-md w-10 h-10 p-2 fill-amber-300"
                     stroke="#525252"
                   />
                   <CardTitle className="text-base font-medium text-[#525252]">
@@ -97,7 +97,7 @@ export default function EmployeeDashboard() {
               <CardHeader>
                 <div className="flex items-center justify-center gap-2">
                   <Banknote
-                    className="bg-green-200 rounded-md w-10 h-10 p-2 text-amber-800 fill-green-400 "
+                    className=" rounded-md w-10 h-10 p-2 text-amber-800 fill-green-400 "
                     fill="#171717"
                     stroke="#525252"
                   />
@@ -127,7 +127,7 @@ export default function EmployeeDashboard() {
               <CardHeader>
                 <div className="flex items-center justify-center gap-2">
                   <TreePalm
-                    className="bg-red-200 rounded-md w-10 h-10 p-2 text-amber-800 fill-red-400 stroke-red-400"
+                    className="rounded-md w-10 h-10 p-2 text-amber-800 fill-red-400 "
                     stroke="#525252"
                   />
                   <CardTitle className="text-base font-medium">

@@ -231,7 +231,7 @@ export default function LeaveRequestPage() {
           <Card className="border border-gray-200 rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-4">
-                <Clock className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-800" />
+                <Clock className="rounded-md w-10 h-10 p-2 text-amber-800" />
                 <span className="text-gray-700 font-medium">Чөлөөний цаг</span>
               </div>
               <div className="flex justify-between items-end">
@@ -250,7 +250,7 @@ export default function LeaveRequestPage() {
           <Card className="border border-gray-200 rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-4">
-                <CalendarIcon className="bg-amber-100 rounded-md w-10 h-10 p-2 text-amber-600" />
+                <CalendarIcon className=" rounded-md w-10 h-10 p-2 text-amber-600" />
                 <span className="text-gray-700 font-medium">
                   Зайнаас ажилласан
                 </span>
@@ -271,7 +271,7 @@ export default function LeaveRequestPage() {
           <Card className="border border-gray-200 rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-4">
-                <Home className="bg-red-100 rounded-md w-10 h-10 p-2 text-amber-600" />
+                <Home className=" rounded-md w-10 h-10 p-2 text-amber-600" />
                 <span className="text-gray-700 font-medium">
                   Ээлжийн амралт
                 </span>

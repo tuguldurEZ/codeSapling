@@ -9,11 +9,11 @@ const Sidebar = () => {
 
   return (
     <div className="w-[288px] py-5 px-[20px] flex flex-col h-[91vh] gap-10 bg-[#ffffff]">
-      <ToggleGroup type="single" className="flex flex-col items-start gap-4">
+      <ToggleGroup type="single" className="flex flex-col items-start gap-4 ">
         <Link href="employee-dashboard">
           <ToggleGroupItem
             value="a"
-            className="flex gap-[10px] items-center px-5 py-2 w-full"
+            className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
           >
             <House />
             <p className=" text-[14px] font-bold">Хянах самбар</p>
@@ -22,7 +22,7 @@ const Sidebar = () => {
         <Link href="employee-leave-request">
           <ToggleGroupItem
             value="b"
-            className="flex gap-[10px] items-center px-6 py-2 w-full"
+            className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
           >
             <Truck />
             <p className=" text-[14px] font-bold w-[70px]">Чөлөө авах</p>
@@ -31,7 +31,7 @@ const Sidebar = () => {
         <Link href="leave-request-history">
           <ToggleGroupItem
             value="c"
-            className="flex gap-[10px] items-center px-6 py-2 w-full"
+            className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
           >
             <Clock />
             <p className=" text-[14px] font-bold">Миний хүсэлтүүд</p>
@@ -41,7 +41,7 @@ const Sidebar = () => {
           <Link href="dashboard">
             <ToggleGroupItem
               value="d"
-              className="flex gap-[10px] items-center px-6 py-2 w-full"
+              className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
             >
               <ShieldUser />
               <p className=" text-[14px] font-bold">Админ хэсэг</p>

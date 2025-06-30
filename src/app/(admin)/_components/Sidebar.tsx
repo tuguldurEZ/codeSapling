@@ -10,7 +10,7 @@ const Sidebar = () => {
         <Link href="dashboard">
           <ToggleGroupItem
             value="a"
-            className="flex gap-[10px] items-center px-5 py-2 w-full"
+            className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
           >
             <House />
             <p className=" text-[14px] font-bold">Хянах самбар</p>
@@ -19,7 +19,7 @@ const Sidebar = () => {
         <Link href="employees">
           <ToggleGroupItem
             value="b"
-            className="flex gap-[10px] items-center px-6 py-2 w-full"
+            className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
           >
             <Truck />
             <p className=" text-[14px] font-bold w-[70px]">Ажилтнууд</p>
@@ -28,7 +28,7 @@ const Sidebar = () => {
         <Link href="leave-request">
           <ToggleGroupItem
             value="c"
-            className="flex gap-[10px] items-center px-6 py-2 w-full"
+            className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
           >
             <Clock />
             <p className=" text-[14px] font-bold">Чөлөөны хүсэлтүүд</p>
@@ -36,8 +36,8 @@ const Sidebar = () => {
         </Link>
         <Link href="employee-dashboard">
           <ToggleGroupItem
-            value="c"
-            className="flex gap-[10px] items-center px-6 py-2 w-full"
+            value="d"
+            className="flex gap-[10px] items-center px-5 py-2 w-full data-[state=on]:bg-gradient-to-br data-[state=on]:from-orange-300 data-[state=on]:to-orange-500 data-[state=on]:text-white data-[state=on]:rounded-full data-[state=on]:font-medium"
           >
             <User />
             <p className=" text-[14px] font-bold">Ажилтан хэсэг</p>
