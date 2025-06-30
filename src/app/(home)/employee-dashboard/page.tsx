@@ -58,7 +58,7 @@ export default function EmployeeDashboard() {
       item.status === "APPROVED"
     );
   });
-  console.log(todayLeaveRequests);
+
   return (
     <div className="min-h-screen w-full bg-gray-50">
       <div className="flex">

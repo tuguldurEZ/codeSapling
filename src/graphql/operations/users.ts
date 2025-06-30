@@ -65,4 +65,7 @@ export const CREATE_LEAVE_REQUEST = gql`
       employeeRole
     }
   }
+  mutation EditRole($id: ID!, $role: String!) {
+    editRole(_id: $id, role: $role)
+  }
 `;

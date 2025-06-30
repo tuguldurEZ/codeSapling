@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { useGetUsersQuery } from "../../../../generated/client-types";
 import { CalendarIcon } from "lucide-react";
-import EmployeeDialog from "./_components/employeeDialog";
 
-import { Button } from "@/components/ui/button";
+import EmployeeCreateDialog from "./_components/employeeCreateDialog";
+import Buttons from "./_components/Buttons";
 
 const EmployeesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
   const { data, loading, error, refetch } = useGetUsersQuery();
+  // const {editRole}=useEditRoleMutation()
 
   if (loading) return;
   if (error)
@@ -24,10 +24,6 @@ const EmployeesPage = () => {
     return fullName.includes(searchTerm.toLowerCase());
   });
 
-  const editHandler = () => {
-    
-  };
-  const deleteHandler = () => {};
   return (
     <div className="py-5 px-6 w-[80vw]  flex flex-col gap-5 bg-gray-100 h-[95vh] rounded-lg overflow-auto">
       <div className="flex justify-between items-center w-full">
@@ -41,7 +37,7 @@ const EmployeesPage = () => {
             className="border border-gray-300 px-1 py-1 rounded-md outline-none"
           />
 
-          <EmployeeDialog onCreated={refetch} />
+          <EmployeeCreateDialog onCreated={refetch} />
         </div>
       </div>
 
@@ -106,19 +102,8 @@ const EmployeesPage = () => {
                     : "Тодорхойгүй"}
                 </span>
               </td>
-              <td className="flex gap-2 ml-7">
-                <Button
-                  onClick={editHandler}
-                  className="bg-white border-red-100 border-[1px] text-red-400 font-semibold hover:bg-red-100"
-                >
-                  Засах
-                </Button>
-                <Button
-                  onClick={deleteHandler}
-                  className="bg-white text-black border-[1px]  hover:bg-gray-100"
-                >
-                  Устгах
-                </Button>
+              <td>
+                <Buttons />
               </td>
             </tr>
           ))}

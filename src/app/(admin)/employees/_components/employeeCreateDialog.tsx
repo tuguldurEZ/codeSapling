@@ -56,7 +56,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function EmployeeDialog({
+export default function EmployeeCreateDialog({
   onCreated,
 }: {
   onCreated: () => void;

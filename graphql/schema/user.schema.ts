@@ -33,6 +33,7 @@ export const userTypeDefs = gql`
     sendOtp(email: String!): User!
     verifyOtp(email: String!, otp: Int!): AuthResponse!
     setNewPassword(email: String!, newPassword: String!): String!
+    editRole(_id: ID!, role: String!): Boolean!
   }
   type Query {
     getUsers: [User!]!

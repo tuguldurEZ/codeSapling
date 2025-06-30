@@ -276,6 +276,14 @@ export type CreateEmployeeMutationVariables = Exact<{
 
 export type CreateEmployeeMutation = { __typename?: 'Mutation', createEmployee: { __typename?: 'User', _id: string, email: string, password?: string | null, role?: string | null, otpcode?: number | null, firstName: string, lastName: string, employedDate: string, phone: number, employeeRole: string } };
 
+export type EditRoleMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  role: Scalars['String']['input'];
+}>;
+
+
+export type EditRoleMutation = { __typename?: 'Mutation', editRole: boolean };
+
 
 export const CreateLeaveRequestDocument = gql`
     mutation CreateLeaveRequest($input: RequestInput!) {
@@ -723,3 +731,35 @@ export function useCreateEmployeeMutation(baseOptions?: Apollo.MutationHookOptio
 export type CreateEmployeeMutationHookResult = ReturnType<typeof useCreateEmployeeMutation>;
 export type CreateEmployeeMutationResult = Apollo.MutationResult<CreateEmployeeMutation>;
 export type CreateEmployeeMutationOptions = Apollo.BaseMutationOptions<CreateEmployeeMutation, CreateEmployeeMutationVariables>;
+export const EditRoleDocument = gql`
+    mutation EditRole($id: ID!, $role: String!) {
+  editRole(_id: $id, role: $role)
+}
+    `;
+export type EditRoleMutationFn = Apollo.MutationFunction<EditRoleMutation, EditRoleMutationVariables>;
+
+/**
+ * __useEditRoleMutation__
+ *
+ * To run a mutation, you first call `useEditRoleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditRoleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editRoleMutation, { data, loading, error }] = useEditRoleMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      role: // value for 'role'
+ *   },
+ * });
+ */
+export function useEditRoleMutation(baseOptions?: Apollo.MutationHookOptions<EditRoleMutation, EditRoleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditRoleMutation, EditRoleMutationVariables>(EditRoleDocument, options);
+      }
+export type EditRoleMutationHookResult = ReturnType<typeof useEditRoleMutation>;
+export type EditRoleMutationResult = Apollo.MutationResult<EditRoleMutation>;
+export type EditRoleMutationOptions = Apollo.BaseMutationOptions<EditRoleMutation, EditRoleMutationVariables>;
