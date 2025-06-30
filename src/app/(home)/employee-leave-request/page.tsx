@@ -231,7 +231,7 @@ export default function LeaveRequestPage() {
           <Card className="border border-gray-200 rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-4">
-                <Clock className="w-5 h-5 text-gray-600" />
+                <Clock className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-800" />
                 <span className="text-gray-700 font-medium">Чөлөөний цаг</span>
               </div>
               <div className="flex justify-between items-end">
@@ -250,7 +250,7 @@ export default function LeaveRequestPage() {
           <Card className="border border-gray-200 rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-4">
-                <CalendarIcon className="w-5 h-5 text-gray-600" />
+                <CalendarIcon className="bg-amber-100 rounded-md w-10 h-10 p-2 text-amber-600" />
                 <span className="text-gray-700 font-medium">
                   Зайнаас ажилласан
                 </span>
@@ -271,7 +271,7 @@ export default function LeaveRequestPage() {
           <Card className="border border-gray-200 rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-4">
-                <Home className="w-5 h-5 text-gray-600" />
+                <Home className="bg-red-100 rounded-md w-10 h-10 p-2 text-amber-600" />
                 <span className="text-gray-700 font-medium">
                   Ээлжийн амралт
                 </span>
@@ -296,7 +296,7 @@ export default function LeaveRequestPage() {
           {/* Left Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* View Toggle */}
-            <div className="flex bg-blue-100 rounded-full p-1">
+            <div className="flex border-beige-300 bg-gradient-to-br   from-beige-400 to-orange-500 rounded-full p-1">
               <button
                 onClick={() => setSelectedView("daily")}
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -455,7 +455,7 @@ export default function LeaveRequestPage() {
                             ? isPast
                               ? "text-gray-400 cursor-not-allowed"
                               : isSelected
-                              ? "bg-black text-white font-semibold"
+                              ? "bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium"
                               : day.isToday
                               ? "bg-gray-300 text-black font-medium"
                               : "text-gray-900 hover:bg-gray-100"
@@ -503,7 +503,7 @@ export default function LeaveRequestPage() {
                         checked={selectedEmployees.includes(index)}
                         onCheckedChange={() => handleEmployeeToggle(index)}
                       />
-                      <Avatar className="w-8 h-8">
+                      <Avatar className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
                         <AvatarFallback className="bg-blue-100 text-black text-sm font-medium">
                           Б
                         </AvatarFallback>
@@ -525,7 +525,7 @@ export default function LeaveRequestPage() {
             </Card>
             <Button
               onClick={handleSubmit}
-              className="w-[50%] mt-4 bg-black text-white"
+              className="bg-gradient-to-br py-2 px-4 mt-4 rounded-full from-orange-300 to-orange-500 text-white font-medium"
             >
               <Send className="w-4 h-4 mr-2" />
               Илгээх
