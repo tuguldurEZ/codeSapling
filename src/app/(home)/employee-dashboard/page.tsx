@@ -214,7 +214,7 @@ export default function EmployeeDashboard() {
               </CardHeader>
 
               <CardContent>
-                {data?.getLeaveRequestsByUser?.map((item) => (
+                {data?.getLeaveRequestsByUser?.slice(0, 4).map((item) => (
                   <div
                     key={item.id}
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg mb-4"

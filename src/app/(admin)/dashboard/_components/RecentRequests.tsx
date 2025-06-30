@@ -4,6 +4,8 @@ import { useLeaveRequest } from "@/app/_context/leaveRequestContext";
 import React from "react";
 import { CircleAlert, Check, X } from "lucide-react";
 import { useEmployee } from "@/app/_context/employeeContext";
+import Link from "next/link";
+
 const leaveTypeLabel = {
   casualLeave: "Энгийн чөлөө",
   paidLeave: "Цалинтай чөлөө",
@@ -15,8 +17,7 @@ const calculateHours = (start: string, end: string) => {
   const startTime = parseInt(start);
   const endTime = parseInt(end);
   const diffMs = endTime - startTime;
-  const hours = diffMs / (1000 * 60 * 60);
-  return hours;
+  return diffMs / (1000 * 60 * 60);
 };
 
 const RecentRequests = () => {
@@ -25,6 +26,12 @@ const RecentRequests = () => {
 
   if (isLoading) return;
   if (!leaveRequests?.length) return <p className="px-6 py-4">Хүсэлт алга</p>;
+
+  const sortedRequests = [...leaveRequests].sort((a, b) => {
+    if (a.status === "PENDING" && b.status !== "PENDING") return -1;
+    if (a.status !== "PENDING" && b.status === "PENDING") return 1;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -65,7 +72,7 @@ const RecentRequests = () => {
       <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-full">
         <p className="font-bold text-[20px]">Сүүлийн хүсэлтүүд</p>
 
-        {leaveRequests.slice(0, 3).map((leave, index) => {
+        {sortedRequests.slice(0, 3).map((leave, index) => {
           const user = leave.userId;
           if (!user) return null;
 
@@ -86,45 +93,46 @@ const RecentRequests = () => {
                   <div>
                     <p className="font-bold">{user.firstName}</p>
                     <p className="text-[#737373] font-medium">
-                      {leaveType} - {hours} цаг{" "}
+                      {leaveType} - {hours} цаг
                     </p>
                   </div>
                   {getStatusBadge(leave.status)}
                 </div>
               </div>
-
-              {/* <div className="ml-14 text-sm text-gray-700 space-y-1">
-                <p>Шалтгаан: {leave.reason}</p>
-              </div> */}
             </div>
           );
         })}
-        <button className="text-end text-[#717171] text-[14px]">
-          Дэлгэрэнгүй
-        </button>
+        <Link
+          href="/leave-request"
+          className="text-end text-[#717171] text-[14px]"
+        >
+          <button>Дэлгэрэнгүй</button>
+        </Link>
       </div>
 
       <div className="p-6 flex flex-col gap-5 rounded-lg bg-white w-full">
         <p className="font-bold text-[20px] ">Ажилчдын тойм</p>
 
         <div className="flex rounded-[4px] bg-gradient-to-r from-beige-50 to-gray-50 hover:from-beige-100 hover:to-gray-100 transition-colors p-3 items-center justify-between w-full">
-          <div className="">
+          <div>
             <p className="text-[20px] font-bold">Идэвхитэй</p>
             <p className="text-[#737373]">Нийт ажилтан</p>
           </div>
           <p className="text-[30px] font-bold">{users?.length}</p>
         </div>
+
         {Object.entries(roleCounts || {})
           .slice(0, 4)
           .map(([role, count]) => (
             <div
               key={role}
-              className="flex  h-[40px] rounded-lg bg-gradient-to-r from-beige-50 to-gray-50 hover:from-beige-100 hover:to-gray-100 transition-colors p-3 items-center justify-between w-full"
+              className="flex h-[40px] rounded-lg bg-gradient-to-r from-beige-50 to-gray-50 hover:from-beige-100 hover:to-gray-100 transition-colors p-3 items-center justify-between w-full"
             >
               <p className="text-[#404040] font-medium">{role}</p>
               <p className="text-[30px] font-bold">{count}</p>
             </div>
           ))}
+
         <button className="text-end text-[#717171] mt-3 text-[14px]">
           Дэлгэрэнгүй
         </button>
