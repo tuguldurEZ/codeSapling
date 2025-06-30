@@ -27,10 +27,10 @@ const Header = () => {
           <div>
             <div className="flex items-center ">
               <p className="text-[#09090B] text-[18px] font-bold tracking-[-0.5px] ">
-                CodeSapling
+                Codesapling
               </p>
             </div>
-            <p className="text-[12px] text-[#71717A]">hackathon</p>
+            <p className="text-[12px] text-[#71717A]">academy</p>
           </div>
         </div>
       </Link>

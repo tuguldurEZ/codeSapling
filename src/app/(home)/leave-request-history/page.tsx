@@ -79,13 +79,6 @@ export default function LeaveRequestHistoryPage() {
     }
   };
 
-  const approvedCount =
-    filteredLeaveRequests?.filter((r) => r.status === "APPROVED").length ?? 0;
-  const pendingCount =
-    filteredLeaveRequests?.filter((r) => r.status === "PENDING").length ?? 0;
-  const rejectedCount =
-    filteredLeaveRequests?.filter((r) => r.status === "REJECTED").length ?? 0;
-
   return (
     <div className="space-y-6 p-6 w-full">
       <div className="flex items-center justify-between">
@@ -101,42 +94,6 @@ export default function LeaveRequestHistoryPage() {
             Шинэ хүсэлт
           </Button>
         </Link>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2">
-              <Calendar className="w-6 h-6" />
-            </div>
-            <p className="text-2xl font-bold text-gray-900">5</p>
-            <p className="text-sm text-gray-600">Нийт чөлөөний өдөр</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-200 text-orange-700 rounded-xl flex items-center justify-center mx-auto mb-2">
-              <Clock className="w-6 h-6" />
-            </div>
-            <p className="text-2xl font-bold text-gray-900">
-              {filteredLeaveRequests?.length}
-            </p>
-            <p className="text-sm text-gray-600">Ашигласан өдөр</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 text-amber-700 rounded-xl flex items-center justify-center mx-auto mb-2">
-              <AlertCircle className="w-6 h-6" />
-            </div>
-            <p className="text-2xl font-bold text-gray-900">
-              {5 - (filteredLeaveRequests?.length || 0)}
-            </p>
-            <p className="text-sm text-gray-600">Үлдсэн өдөр</p>
-          </CardContent>
-        </Card>
       </div>
 
       <Card className="border-0 shadow-sm">
@@ -219,38 +176,6 @@ export default function LeaveRequestHistoryPage() {
           </div>
         </CardContent>
       </Card>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-6 h-6" />
-            </div>
-            <p className="text-2xl font-bold text-gray-900">{approvedCount}</p>
-            <p className="text-sm text-gray-600">Зөвшөөрсөн хүсэлт</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 text-amber-700 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <AlertCircle className="w-6 h-6" />
-            </div>
-            <p className="text-2xl font-bold text-gray-900">{pendingCount}</p>
-            <p className="text-sm text-gray-600">Хүлээгдэж буй хүсэлт</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-200 text-orange-700 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <XCircle className="w-6 h-6" />
-            </div>
-            <p className="text-2xl font-bold text-gray-900">{rejectedCount}</p>
-            <p className="text-sm text-gray-600">Татгалзсан хүсэлт</p>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }

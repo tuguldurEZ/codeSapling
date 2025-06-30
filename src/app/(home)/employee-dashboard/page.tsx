@@ -1,5 +1,5 @@
 "use client";
-import { Clock, Send, CalendarDays } from "lucide-react";
+import { Clock, Send, CalendarDays, Banknote, TreePalm } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -67,7 +67,10 @@ export default function EmployeeDashboard() {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-center gap-2">
-                  <CalendarDays className="h-5 w-5" stroke="#525252" />
+                  <CalendarDays
+                    className="bg-amber-200 rounded-md w-10 h-10 p-2 text-amber-800"
+                    stroke="#525252"
+                  />
                   <CardTitle className="text-base font-medium text-[#525252]">
                     Чөлөөний цаг
                   </CardTitle>
@@ -93,8 +96,8 @@ export default function EmployeeDashboard() {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-center gap-2">
-                  <CalendarDays
-                    className="h-5 w-5 bg-amber-400"
+                  <Banknote
+                    className="bg-green-200 rounded-md w-10 h-10 p-2 text-amber-800 fill-green-400 "
                     fill="#171717"
                     stroke="#525252"
                   />
@@ -123,7 +126,10 @@ export default function EmployeeDashboard() {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-center gap-2">
-                  <CalendarDays className="h-5 w-5" stroke="#525252" />
+                  <TreePalm
+                    className="bg-red-200 rounded-md w-10 h-10 p-2 text-amber-800 fill-red-400 stroke-red-400"
+                    stroke="#525252"
+                  />
                   <CardTitle className="text-base font-medium">
                     Ээлжийн амралт
                   </CardTitle>
@@ -167,8 +173,8 @@ export default function EmployeeDashboard() {
                       className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                     >
                       <div className="flex items-center gap-3">
-                        <Avatar className="w-10 h-10 bg-blue-100">
-                          <AvatarFallback className="text-blue-600">
+                        <Avatar className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
+                          <AvatarFallback>
                             {item.userId?.firstName?.[0]?.toUpperCase() ?? "?"}
                           </AvatarFallback>
                         </Avatar>
@@ -214,8 +220,8 @@ export default function EmployeeDashboard() {
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg mb-4"
                   >
                     <div className="flex items-center gap-3">
-                      <Avatar className="w-10 h-10 bg-blue-100">
-                        <AvatarFallback className="text-blue-600">
+                      <Avatar className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
+                        <AvatarFallback>
                           {item.userId?.email?.[0]?.toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
