@@ -17,19 +17,19 @@ const StatusDashboard = () => {
     return <p className="px-6 py-4 text-red-500">Алдаа: Өгөгдөл олдсонгүй</p>;
 
   const totalCasualLeave = leaveRequests.filter(
-    (req) => req.LeaveType === "casualLeave"
+    (req) => req.LeaveType === "casualLeave" && req.status === "APPROVED"
   ).length;
 
   const totalPaidLeave = leaveRequests.filter(
-    (req) => req.LeaveType === "paidLeave"
+    (req) => req.LeaveType === "paidLeave" && req.status === "APPROVED"
   ).length;
 
   const totalRemoteWork = leaveRequests.filter(
-    (req) => req.LeaveType === "remoteWork"
+    (req) => req.LeaveType === "remoteWork" && req.status === "APPROVED"
   ).length;
 
   const totalAnnualLeave = leaveRequests.filter(
-    (req) => req.LeaveType === "annualLeave"
+    (req) => req.LeaveType === "annualLeave" && req.status === "APPROVED"
   ).length;
 
   const pendingRequests = leaveRequests.filter(

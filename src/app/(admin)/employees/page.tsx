@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  useGetUsersQuery,
-} from "../../../../generated/client-types";
+import { useGetUsersQuery } from "../../../../generated/client-types";
 import { CalendarIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -29,7 +27,7 @@ const EmployeesPage = () => {
   const editHandler = async () => {};
   const deleteHandler = () => {};
   return (
-    <div className="py-5 px-6 w-[80vw]  flex flex-col gap-5 bg-gray-100 h-[95vh] rounded-lg overflow-auto">
+    <div className="py-5 px-6 w-full  flex flex-col gap-5 bg-gray-100 h-[95vh] rounded-lg overflow-auto">
       <div className="flex justify-between items-center w-full">
         <p className="font-semibold text-xl ">Ажилтнуудын удирдлага</p>
         <div className="flex items-center gap-6">

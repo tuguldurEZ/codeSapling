@@ -78,7 +78,7 @@ export default function LeaveRequest() {
     "all"
   );
 
-  const [updateLeaveStatus] = useUpdateLeaveStatusMutation();
+  const [updateLeaveStatus, { loading }] = useUpdateLeaveStatusMutation();
   if (!leaveRequests) {
     return;
   }
@@ -151,8 +151,8 @@ export default function LeaveRequest() {
   })();
 
   return (
-    <div className="w-full bg-gray-100 min-h-screen p-6">
-      <div className="w-full max-w-6xl mx-auto">
+    <div className="w-full bg-gray-100 min-h-screen  py-5 px-6 ">
+      <div className="w-full ">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-semibold text-gray-900">
             Чөлөөний хүсэлтүүд
@@ -298,8 +298,12 @@ export default function LeaveRequest() {
           </DialogHeader>
 
           <DialogFooter>
-            <Button variant="ghost" onClick={() => setDialogOpen(false)}>
-              Үгүй
+            <Button
+              disabled={loading}
+              variant="ghost"
+              onClick={() => setDialogOpen(false)}
+            >
+              {loading ? "Уншиж байна" : "Тийм"}
             </Button>
             <Button
               onClick={async () => {
@@ -325,8 +329,9 @@ export default function LeaveRequest() {
                   setSelectedRequestId(null);
                 }
               }}
+              disabled={loading}
             >
-              Тийм
+              {loading ? "Уншиж байна" : "Тийм"}
             </Button>
           </DialogFooter>
         </DialogContent>

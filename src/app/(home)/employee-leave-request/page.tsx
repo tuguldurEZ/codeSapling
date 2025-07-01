@@ -38,7 +38,7 @@ import { toast } from "sonner";
 import { useLeaveRequest } from "@/app/_context/leaveRequestContext";
 
 export default function LeaveRequestPage() {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 5, 1)); // June 2025
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedView, setSelectedView] = useState("daily");
   const [reason, setReason] = useState<string>("");
   const [manager, setManager] = useState<string>("");
@@ -51,36 +51,83 @@ export default function LeaveRequestPage() {
   const { currentUser } = useEmployee();
   const { refetch } = useLeaveRequest();
 
-  const [createLeaveRequest] = useCreateLeaveRequestMutation({
-    onCompleted: () => {
-      toast.success("Амралтын хүсэлт амжилттай илгээгдлээ!");
-    },
-    onError: (error) => {
-      toast.error(`Алдаа гарлаа: ${error.message}`);
-    },
-  });
+  const [createLeaveRequest, { loading }] = useCreateLeaveRequestMutation();
 
   if (!users) {
     return <Loading />;
   }
 
-  const admins = users?.filter((user) => user.role === "ADMIN");
+  const admins = users?.filter(
+    (user) => user.role === "ADMIN" && user._id !== currentUser?._id
+  );
 
   const handleSubmit = async () => {
-    if (selectedDates.length === 0) {
-      alert("Та дор хаяж нэг өдөр сонгоно уу.");
+    if (!currentUser?._id || !reason || !manager) {
+      toast.error("Бүх талбарыг бөглөнө үү.");
       return;
     }
 
-    const sortedDates = [...selectedDates].sort(
-      (a, b) => a.getTime() - b.getTime()
-    );
-
-    const startDate = sortedDates[0].toISOString();
-    const endDate = sortedDates[sortedDates.length - 1].toISOString();
-    if (!currentUser?._id || !reason || !manager) {
-      alert("Бүх талбарыг бөглөнө үү");
+    if (selectedView === "daily" && selectedDates.length === 0) {
+      toast.error("Та дор хаяж нэг өдөр сонгоно уу.");
       return;
+    }
+
+    if (selectedView === "hourly") {
+      if (selectedDates.length !== 1) {
+        toast.error("Та зөвхөн нэг өдөр сонгоно уу.");
+        return;
+      }
+
+      if (selectedHours.length === 0) {
+        toast.error("Та дор хаяж нэг цаг сонгоно уу.");
+        return;
+      }
+
+      const isConsecutive = (hours: string[]) => {
+        const hourStartList = hours
+          .map((h) => parseInt(h.split(":")[0]))
+          .sort((a, b) => a - b);
+
+        return hourStartList.every((val, i, arr) =>
+          i === 0 ? true : val === arr[i - 1] + 1
+        );
+      };
+
+      if (!isConsecutive(selectedHours)) {
+        toast.error(
+          "Та дараалсан цагууд сонгоно уу. Жишээ нь: 10:00–11:00, 11:00–12:00"
+        );
+        return;
+      }
+    }
+
+    let startDate = "";
+    let endDate = "";
+
+    if (selectedView === "daily") {
+      const sortedDates = [...selectedDates].sort(
+        (a, b) => a.getTime() - b.getTime()
+      );
+      startDate = sortedDates[0].toISOString();
+      endDate = sortedDates[sortedDates.length - 1].toISOString();
+    } else if (selectedView === "hourly") {
+      const date = selectedDates[0];
+
+      const sortedHours = [...selectedHours].sort();
+      const [startTimeStr] = sortedHours[0].split("-");
+      const [, endTimeStr] = sortedHours[sortedHours.length - 1].split("-");
+
+      const [startH, startM] = startTimeStr.split(":").map(Number);
+      const [endH, endM] = endTimeStr.split(":").map(Number);
+
+      const start = new Date(date);
+      start.setHours(startH, startM, 0, 0);
+
+      const end = new Date(date);
+      end.setHours(endH, endM, 0, 0);
+
+      startDate = start.toISOString();
+      endDate = end.toISOString();
     }
 
     await createLeaveRequest({
@@ -96,7 +143,16 @@ export default function LeaveRequestPage() {
         },
       },
     });
+
     refetch();
+    toast.success("Амралтын хүсэлт амжилттай илгээгдлээ!");
+    setReason("");
+    setManager("");
+    setNote("");
+    setSelectedHours([]);
+    setSelectedDates([]);
+    setSelectedEmployees([]);
+    setSelectedView("daily");
   };
 
   const toggleHour = (hour: string) => {
@@ -181,6 +237,11 @@ export default function LeaveRequestPage() {
   };
 
   const toggleDateSelection = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (date <= today) return;
+
     const exists = selectedDates.some(
       (d) => d.toDateString() === date.toDateString()
     );
@@ -225,7 +286,7 @@ export default function LeaveRequestPage() {
     selectedEmployees.length > 0 && selectedEmployees.length < users.length;
 
   return (
-    <div className="min-h-screen  bg-gray-50 p-6">
+    <div className="min-h-screen w-full  bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="border border-gray-200 rounded-2xl">
@@ -293,9 +354,7 @@ export default function LeaveRequestPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 border-[1px] bg-white p-4 rounded-xl">
-          {/* Left Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            {/* View Toggle */}
             <div className="flex border-beige-300 bg-gradient-to-br   from-beige-400 to-orange-500 rounded-full p-1">
               <button
                 onClick={() => setSelectedView("daily")}
@@ -321,7 +380,6 @@ export default function LeaveRequestPage() {
               </button>
             </div>
 
-            {/* Filters */}
             <div className="space-y-4">
               <div>
                 <Select onValueChange={setReason}>
@@ -471,7 +529,6 @@ export default function LeaveRequestPage() {
             </Card>
           </div>
 
-          {/* Right Sidebar */}
           <div className="lg:col-span-1 items-end flex flex-col">
             <Card className="border h-[438px] border-gray-200 rounded-2xl">
               <CardContent className="p-6">
@@ -496,28 +553,30 @@ export default function LeaveRequestPage() {
                   </label>
                 </div>
                 <div className="space-y-3">
-                  {users?.slice(0, 3).map((employee, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <Checkbox
-                        id={`employee-${index}`}
-                        checked={selectedEmployees.includes(index)}
-                        onCheckedChange={() => handleEmployeeToggle(index)}
-                      />
-                      <Avatar className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
-                        <AvatarFallback className="bg-blue-100 text-black text-sm font-medium">
-                          Б
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-gray-900">
-                          {employee.firstName}
-                        </div>
-                        <div className="text-xs text-gray-500 truncate">
-                          {employee.email}
+                  {users
+                    ?.filter((user) => user._id !== currentUser?._id)
+                    .map((employee, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <Checkbox
+                          id={`employee-${index}`}
+                          checked={selectedEmployees.includes(index)}
+                          onCheckedChange={() => handleEmployeeToggle(index)}
+                        />
+                        <Avatar className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
+                          <AvatarFallback className="bg-blue-100 text-black text-sm font-medium">
+                            Б
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-medium text-gray-900">
+                            {employee.firstName}
+                          </div>
+                          <div className="text-xs text-gray-500 truncate">
+                            {employee.email}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
 
                 <div className="flex gap-2 mt-6"></div>
@@ -526,9 +585,10 @@ export default function LeaveRequestPage() {
             <Button
               onClick={handleSubmit}
               className="bg-gradient-to-br py-2 px-4 mt-4 rounded-full from-orange-300 to-orange-500 text-white font-medium"
+              disabled={loading}
             >
               <Send className="w-4 h-4 mr-2" />
-              Илгээх
+              {loading ? "Уншиж байна" : "Илгээх"}
             </Button>
           </div>
         </div>

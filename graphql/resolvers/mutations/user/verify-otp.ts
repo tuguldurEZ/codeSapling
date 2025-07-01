@@ -7,7 +7,6 @@ export const verifyOtp = async (
   _: unknown,
   { email, otp }: { email: string; otp: number }
 ) => {
-  console.log(otp);
   const user = await userModel.findOne({ email });
   if (!user) {
     throw new Error("User not found");
