@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useGetUsersQuery } from "../../../../generated/client-types";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, SquarePen, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import EmployeeCreateDialog from "./_components/employeeCreateDialog";
@@ -104,18 +104,18 @@ const EmployeesPage = () => {
                     : "Тодорхойгүй"}
                 </span>
               </td>
-              <td className="flex gap-2 ml-7">
+              <td className="flex gap-2 ml-7 justify-center">
                 <Button
                   onClick={editHandler}
-                  className="bg-white border-red-100 border-[1px] text-red-400 font-semibold hover:bg-red-100"
+                  className="w-10 h-10 bg-[#E0FBFC66] border-none hover:bg-[#e0fbfc] flex justify-center items-center"
                 >
-                  Засах
+                  <SquarePen color="black" className="w-[16px] h-[16px]" />
                 </Button>
                 <Button
                   onClick={deleteHandler}
-                  className="bg-white text-black border-[1px]  hover:bg-gray-100"
+                  className="w-10 h-10 bg-[#DC262533] hover:bg-[#dc252558] flex justify-center items-center"
                 >
-                  Устгах
+                  <Trash2 color="black" className="w-[16px] h-[16px]" />
                 </Button>
               </td>
             </tr>
