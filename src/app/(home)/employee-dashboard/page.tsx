@@ -226,7 +226,9 @@ export default function EmployeeDashboard() {
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <div className="font-medium">{item.userId?.email}</div>
+                        <div className="font-medium">
+                          {item.userId?.firstName}
+                        </div>
                         <div className="text-sm text-gray-500">
                           {item.LeaveType === "paidLeave"
                             ? "Цалинтай чөлөө"
