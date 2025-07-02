@@ -115,13 +115,13 @@ const LeaveRequestHistory = () => {
 
       <EmployeeSection
         icon={Clock}
-        title="6-р сар зайнаас ажилласан"
+        title="7-р сар зайнаас ажилласан"
         employees={remoteEmployees}
       />
 
       <EmployeeSection
         icon={Users}
-        title="6-р сар ээлжийн амралт"
+        title="7-р сар ээлжийн амралт"
         employees={restEmployees}
       />
     </div>
