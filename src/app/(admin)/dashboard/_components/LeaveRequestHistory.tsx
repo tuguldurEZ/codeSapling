@@ -16,15 +16,13 @@ interface Employee {
 }
 
 const remoteEmployees: Employee[] = [
-  { name: "Батдорж", role: "Менежер", days: 0, avatar: "БД" },
-  { name: "Уламбаяр", role: "Нярав", days: 0, avatar: "УБ" },
-  { name: "Батбаяр", role: "Програм хөгжүүлэгч", days: 0, avatar: "ББ" },
+  { name: "Төгөлдөр", role: "Рагчаасүрэн", days: 1, avatar: "БД" },
+  { name: "Пүрэв-Очир", role: "Буяннэмэх", days: 2, avatar: "УБ" },
+  { name: "Сүхэрдэнэ", role: "Батсүх", days: 0, avatar: "ББ" },
 ];
 
 const restEmployees: Employee[] = [
   { name: "Энхжин", role: "Менежер", days: 0, avatar: "ЭЖ" },
-  { name: "Батбаяр", role: "Менежер", days: 0, avatar: "ББ" },
-  { name: "Батбаяр", role: "Менежер", days: 0, avatar: "ББ" },
 ];
 
 interface SectionHeaderProps {
