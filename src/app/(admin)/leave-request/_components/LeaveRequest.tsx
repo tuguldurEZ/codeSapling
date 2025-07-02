@@ -230,7 +230,7 @@ export default function LeaveRequest() {
                       </div>
 
                       <h4 className="font-medium text-gray-900 mb-1">
-                        {request.title}
+                        <p>Шалтгаан: {request.title}</p>
                       </h4>
                       <p className="text-sm text-gray-500">
                         Илгээсэн: {request.submittedAt}
