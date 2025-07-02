@@ -36,6 +36,7 @@ import {
 } from "../../../../generated/client-types";
 import { toast } from "sonner";
 import { useLeaveRequest } from "@/app/_context/leaveRequestContext";
+import { Input } from "@/components/ui/input";
 
 export default function LeaveRequestPage() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -46,6 +47,8 @@ export default function LeaveRequestPage() {
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const [open, setOpen] = useState(false);
   const { users } = useEmployee();
   const { currentUser } = useEmployee();
@@ -268,11 +271,18 @@ export default function LeaveRequestPage() {
 
   const days = getDaysInMonth(currentDate);
 
-  const handleSelectAll = () => {
-    if (selectedEmployees.length === users?.length) {
-      setSelectedEmployees([]);
+  const filteredUsers = users?.filter(
+    (user) =>
+      user._id !== currentUser?._id &&
+      user.firstName?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSelectAll = (checked: boolean | "indeterminate") => {
+    if (checked) {
+      const allIndices = filteredUsers.map((_, index) => index);
+      setSelectedEmployees(allIndices);
     } else {
-      setSelectedEmployees(users?.map((_, index) => index));
+      setSelectedEmployees([]);
     }
   };
   const handleEmployeeToggle = (index: number) => {
@@ -280,10 +290,11 @@ export default function LeaveRequestPage() {
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
+  const isAllSelected =
+    filteredUsers?.length > 0 &&
+    filteredUsers.every((_, index) => selectedEmployees.includes(index));
 
-  const isAllSelected = selectedEmployees.length === users?.length;
-  const isIndeterminate =
-    selectedEmployees.length > 0 && selectedEmployees.length < users.length;
+  const isIndeterminate = selectedEmployees.length > 0 && !isAllSelected;
 
   return (
     <div className="min-h-screen w-full  bg-gray-50 p-6">
@@ -529,13 +540,14 @@ export default function LeaveRequestPage() {
             </Card>
           </div>
 
-          <div className="lg:col-span-1 items-end flex flex-col">
-            <Card className="border h-[438px] border-gray-200 rounded-2xl">
-              <CardContent className="p-6">
+          <div className="lg:col-span-1 items-end flex flex-col ">
+            <Card className="border h-[438px] border-gray-200 rounded-2xl ">
+              <CardContent className="p-6 overflow-auto">
                 <h3 className="font-medium text-gray-900 mb-4">
                   Мэдэгдэх ажилчид
                 </h3>
-                <div className="mb-4 flex gap-4 cursor-pointer">
+
+                <div className="mb-4 flex gap-4 cursor-pointer min-w-[228px]">
                   <Checkbox
                     id="select-all"
                     checked={isAllSelected}
@@ -552,36 +564,42 @@ export default function LeaveRequestPage() {
                     Бүгдийг сонгох
                   </label>
                 </div>
+
+                <Input
+                  type="text"
+                  placeholder="Ажилтны нэр хайх..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="mb-4"
+                />
+
                 <div className="space-y-3">
-                  {users
-                    ?.filter((user) => user._id !== currentUser?._id)
-                    .map((employee, index) => (
-                      <div key={index} className="flex items-center gap-3">
-                        <Checkbox
-                          id={`employee-${index}`}
-                          checked={selectedEmployees.includes(index)}
-                          onCheckedChange={() => handleEmployeeToggle(index)}
-                        />
-                        <Avatar className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
-                          <AvatarFallback className="bg-blue-100 text-black text-sm font-medium">
-                            Б
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-sm font-medium text-gray-900">
-                            {employee.firstName}
-                          </div>
-                          <div className="text-xs text-gray-500 truncate">
-                            {employee.email}
-                          </div>
+                  {filteredUsers?.map((employee, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <Checkbox
+                        id={`employee-${index}`}
+                        checked={selectedEmployees.includes(index)}
+                        onCheckedChange={() => handleEmployeeToggle(index)}
+                      />
+                      <Avatar className="bg-gradient-to-br py-2 px-4 rounded-full from-beige-400 to-orange-500 text-white font-medium">
+                        <AvatarFallback className="bg-blue-100 text-black text-sm font-medium">
+                          {employee.firstName?.charAt(0) ?? "?"}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-gray-900">
+                          {employee.firstName}
+                        </div>
+                        <div className="text-xs text-gray-500 truncate">
+                          {employee.email}
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
-
-                <div className="flex gap-2 mt-6"></div>
               </CardContent>
             </Card>
+
             <Button
               onClick={handleSubmit}
               className="bg-gradient-to-br py-2 px-4 mt-4 rounded-full from-orange-300 to-orange-500 text-white font-medium"
